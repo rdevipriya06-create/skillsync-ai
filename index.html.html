@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillSync AI – Bridge Your Skill Gap</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-grad: linear-gradient(135deg,#f9a8d4 0%,#c084fc 30%,#818cf8 60%,#93c5fd 100%);
+  --card: rgba(255,255,255,0.92);
+  --card-border: rgba(255,255,255,0.6);
+  --purple: #6d28d9; --blue: #3b82f6;
+  --text: #1e1b4b; --text-muted: #64748b;
+  --accent: #06b6d4; --success: #10b981;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;background:var(--bg-grad);background-attachment:fixed;color:var(--text);overflow-x:hidden}
+h1,h2,h3,.brand{font-family:'Clash Display',sans-serif}
+
+/* SCREENS */
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+
+/* NAVS */
+.landing-nav{display:flex;align-items:center;justify-content:space-between;padding:18px 6vw;background:rgba(255,255,255,0.68);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.5);position:sticky;top:0;z-index:50;flex-wrap:wrap;gap:10px}
+.brand{font-size:1.25rem;font-weight:700;color:var(--purple);letter-spacing:-.3px;cursor:pointer;user-select:none}
+.app-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 4vw;background:rgba(255,255,255,0.72);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.5);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap}
+.nav-links a{text-decoration:none;font-size:.78rem;font-weight:600;padding:6px 10px;border-radius:8px;color:var(--text);transition:all .2s;cursor:pointer;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{background:var(--purple);color:#fff}
+
+/* BUTTONS */
+.btn{cursor:pointer;border:none;border-radius:12px;font-family:inherit;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;padding:11px 24px;font-size:.92rem;box-shadow:0 4px 14px rgba(109,40,217,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(109,40,217,.45)}
+.btn-outline{background:rgba(255,255,255,.8);border:1.5px solid #c4b5fd;color:var(--purple);padding:10px 22px;font-size:.92rem}
+.btn-outline:hover{background:#ede9fe}
+.btn-sm{padding:7px 14px!important;font-size:.8rem!important;border-radius:8px!important}
+.btn-success{background:var(--success);color:#fff;padding:8px 16px;font-size:.82rem;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-weight:600}
+.btn-week-done{background:#d1fae5;color:var(--success);border:1.5px solid #6ee7b7;padding:8px 14px;font-size:.8rem;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:20px;padding:28px;box-shadow:0 8px 32px rgba(109,40,217,.10);backdrop-filter:blur(8px)}
+.mt{margin-top:20px}
+
+/* FORMS */
+label{font-size:.88rem;font-weight:600;color:var(--text);display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 16px;border:1.5px solid #c4b5fd;border-radius:12px;font-family:inherit;font-size:.95rem;background:rgba(255,255,255,.85);color:var(--text);outline:none;transition:border .2s}
+input:focus,select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(109,40,217,.12)}
+.form-group{margin-bottom:18px}
+
+/* MISC */
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.75);border:1px solid rgba(109,40,217,.25);border-radius:50px;padding:8px 18px;font-size:.85rem;font-weight:600;color:var(--purple)}
+.tag-area{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag{background:#ede9fe;color:var(--purple);border-radius:20px;padding:5px 14px;font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:6px}
+.tag .rm{cursor:pointer;font-size:1rem}
+.section-title{font-size:clamp(1.4rem,3vw,1.8rem);font-weight:700;margin-bottom:6px}
+.section-title .hi{color:#7c3aed}
+.section-sub{color:var(--text-muted);margin-bottom:24px;font-size:.95rem}
+
+/* INNER PAGES */
+.page{display:none;flex:1;padding:36px 5vw}
+.page.active{display:block}
+
+/* CIRCLE SCORE */
+.circle-wrap{display:flex;flex-direction:column;align-items:center;padding:10px 0}
+.circle-svg{width:140px;height:140px}
+.circle-track{fill:none;stroke:#e9d5ff;stroke-width:10}
+.circle-fill{fill:none;stroke:url(#cg);stroke-width:10;stroke-linecap:round;stroke-dasharray:339;stroke-dashoffset:339;transition:stroke-dashoffset 1.2s ease}
+.circle-text{font-family:'Clash Display';font-size:1.25rem;font-weight:700;fill:var(--purple)}
+.circle-lbl{font-size:1rem;font-weight:600;margin-top:8px;color:var(--text-muted)}
+
+/* SKILL ITEMS */
+.skill-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:.93rem}
+.skill-item:last-child{border-bottom:none}
+
+/* ROADMAP */
+.week-card{background:var(--card);border-radius:16px;padding:20px 24px;margin-bottom:16px;border-left:4px solid var(--purple);box-shadow:0 4px 16px rgba(109,40,217,.08);transition:border-color .3s}
+.week-card.done{border-left-color:var(--success)}
+.week-title{font-size:1rem;font-weight:700;color:var(--purple);margin-bottom:6px}
+.week-card.done .week-title{color:var(--success)}
+.week-hours{font-size:.8rem;background:#ede9fe;color:var(--purple);padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px}
+.week-topics{list-style:none}
+.week-topics li{padding:4px 0;font-size:.88rem;color:var(--text-muted)}
+.week-topics li::before{content:"-> ";color:var(--accent);font-weight:700}
+.week-footer{display:flex;justify-content:flex-end;margin-top:14px}
+
+/* COURSES */
+.course-card{background:var(--card);border-radius:16px;padding:18px 22px;margin-bottom:14px;display:flex;align-items:flex-start;gap:14px;border:1px solid var(--card-border);box-shadow:0 4px 14px rgba(109,40,217,.07);flex-wrap:wrap}
+.course-icon{font-size:1.8rem;flex-shrink:0}
+.course-info{flex:1;min-width:200px}
+.course-name{font-weight:700;font-size:.97rem;margin-bottom:4px}
+.course-meta{font-size:.8rem;color:var(--text-muted);margin-bottom:10px}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.73rem;font-weight:700;margin-right:5px}
+.badge-free{background:#d1fae5;color:var(--success)}
+.badge-yt{background:#fee2e2;color:#dc2626}
+.badge-plat{background:#dbeafe;color:#1d4ed8}
+.badge-known{background:#ede9fe;color:var(--purple)}
+.course-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* PROGRESS REDESIGN */
+.prog-bar-wrap{background:#e9d5ff;border-radius:20px;height:10px;overflow:hidden;margin:6px 0}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--blue));border-radius:20px;transition:width 1s ease}
+.prog-item{margin-bottom:16px}
+.prog-label{display:flex;justify-content:space-between;font-size:.87rem;font-weight:600;margin-bottom:3px}
+
+/* SKILL CHECKLIST */
+.checklist-item{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;border:1.5px solid #e9d5ff;margin-bottom:10px;transition:all .25s;cursor:pointer;background:rgba(255,255,255,.7)}
+.checklist-item:hover{border-color:#c4b5fd;background:rgba(255,255,255,.9)}
+.checklist-item.checked{background:#f0fdf4;border-color:#6ee7b7}
+.checklist-circle{width:26px;height:26px;border-radius:50%;border:2px solid #c4b5fd;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .25s;font-size:.9rem}
+.checklist-item.checked .checklist-circle{background:var(--success);border-color:var(--success);color:#fff}
+.checklist-name{flex:1;font-size:.93rem;font-weight:500;transition:all .25s}
+.checklist-item.checked .checklist-name{text-decoration:line-through;color:var(--text-muted)}
+
+/* BAR CHART */
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:70px;justify-content:center;margin:14px 0 6px}
+.bar-item{border-radius:6px 6px 0 0;min-width:18px;flex:1;max-width:32px;transition:height .8s ease,background .3s}
+
+/* PROFILE */
+.avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;flex-shrink:0}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px}
+.stat-box{background:var(--card);border-radius:14px;padding:16px;text-align:center;border:1px solid var(--card-border)}
+.stat-num{font-size:1.7rem;font-weight:700;color:var(--purple);font-family:'Clash Display'}
+.stat-lbl{font-size:.78rem;color:var(--text-muted);margin-top:3px}
+
+/* AUTH */
+.social-btn{width:100%;padding:12px;border-radius:12px;border:1.5px solid #c4b5fd;background:rgba(255,255,255,.85);font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;color:var(--text);transition:all .2s}
+.social-btn:hover{background:#ede9fe}
+.divider{text-align:center;color:var(--text-muted);margin:16px 0;font-size:.85rem;position:relative}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:#ddd}
+.divider::before{left:0}.divider::after{right:0}
+
+/* CHATBOT */
+#chatbot-toggle{position:fixed;bottom:24px;right:24px;z-index:300;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-size:1.4rem;border:none;cursor:pointer;box-shadow:0 4px 18px rgba(109,40,217,.45);align-items:center;justify-content:center;display:none}
+#chatbot-box{position:fixed;bottom:88px;right:24px;z-index:300;width:min(380px,94vw);border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(109,40,217,.25);display:none;flex-direction:column}
+.chat-header{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;padding:14px 18px;font-weight:700;display:flex;justify-content:space-between;align-items:center;font-size:.95rem}
+.chat-messages{background:#fff;height:320px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:.87rem;line-height:1.55;white-space:pre-wrap}
+.msg-bot{background:#f3f0ff;color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}
+.msg-user{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-typing{display:flex;align-items:center;gap:4px;padding:10px 14px;background:#f3f0ff;border-radius:14px;border-bottom-left-radius:4px;align-self:flex-start}
+.dot{width:7px;height:7px;border-radius:50%;background:#7c3aed;animation:bounce .8s infinite}
+.dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chat-input-row{background:#fff;display:flex;padding:10px;gap:8px;border-top:1px solid #f1f5f9}
+.chat-input-row input{margin:0;border-radius:10px;font-size:.87rem;padding:9px 12px}
+.chat-input-row button{background:var(--purple);color:#fff;border:none;border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:700;font-size:.87rem}
+
+/* ADMIN PANEL */
+#admin-panel{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.admin-box{background:#fff;border-radius:20px;width:100%;max-width:700px;max-height:85vh;overflow:hidden;display:flex;flex-direction:column}
+.admin-header{background:linear-gradient(135deg,#1e1b4b,#4c1d95);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center}
+.admin-body{overflow-y:auto;padding:24px}
+.admin-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.admin-table th{background:#f3f0ff;padding:10px 14px;text-align:left;font-weight:700;color:var(--purple)}
+.admin-table td{padding:10px 14px;border-bottom:1px solid #f1f5f9}
+.admin-table tr:hover td{background:#fafafa}
+
+/* LOADING */
+.loading{text-align:center;padding:40px;color:var(--text-muted);font-size:.95rem}
+.spinner{display:inline-block;width:32px;height:32px;border:3px solid #e9d5ff;border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:520px){.grid2{grid-template-columns:1fr}}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.anim{animation:fadeUp .5s ease both}
+.anim2{animation:fadeUp .5s .12s ease both}
+.anim3{animation:fadeUp .5s .25s ease both}
+.anim4{animation:fadeUp .5s .38s ease both}
+
+@media(max-width:640px){
+  .app-nav{padding:10px 3vw}
+  .nav-links a{font-size:.72rem;padding:5px 7px}
+  .page{padding:22px 4vw}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LANDING ============ -->
+<div class="screen active" id="screen-landing">
+  <nav class="landing-nav">
+    <div class="brand" id="landing-brand" onclick="brandClick()">✨ SkillSync AI</div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-outline btn-sm" onclick="showScreen('login')">Login</button>
+      <button class="btn btn-primary btn-sm" onclick="showScreen('signup')">Get Started</button>
+    </div>
+  </nav>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 6vw">
+    <div class="pill anim">⚡ AI-Powered Skill Analysis</div>
+    <h1 class="anim2" style="font-size:clamp(2.4rem,6vw,4.4rem);font-weight:700;line-height:1.1;margin:20px 0">Bridge Your <span style="color:#06b6d4">Skill Gap</span> with AI</h1>
+    <p class="anim3" style="font-size:clamp(1rem,2vw,1.2rem);color:#475569;max-width:560px;margin-bottom:36px;line-height:1.7">Discover the exact skills you need for your dream job. Get a personalized roadmap and course recommendations powered by intelligent analysis.</p>
+    <div class="anim3" style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:60px">
+      <button class="btn btn-primary" onclick="showScreen('signup')">🚀 Analyze My Skills →</button>
+      <button class="btn btn-outline" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Learn More</button>
+    </div>
+    <div id="features" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;width:100%;max-width:780px" class="anim4">
+      <div class="card" style="text-align:center"><div style="font-size:2rem;margin-bottom:10px">🎯</div><div style="font-weight:700;margin-bottom:4px">Skill Analysis</div><div style="font-size:.85rem;color:var(--text-muted)">AI identifies your gaps instantly</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:2rem;margin-bottom:10px">🗺</div><div style="font-weight:700;margin-bottom:4px">Learning Roadmap</div><div style="font-size:.85rem;color:var(--text-muted)">Week-by-week personalized plan</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:2rem;margin-bottom:10px">📚</div><div style="font-weight:700;margin-bottom:4px">Course Recommendations</div><div style="font-size:.85rem;color:var(--text-muted)">Free and paid resources curated for you</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LOGIN ============ -->
+<div class="screen" id="screen-login" style="align-items:center;justify-content:center">
+  <div style="width:100%;max-width:440px;padding:24px 20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
+      <div class="brand">✨ SkillSync AI</div>
+      <button class="btn btn-outline btn-sm" onclick="showScreen('landing')">← Back</button>
+    </div>
+    <div class="card anim">
+      <h2 style="font-size:1.7rem;margin-bottom:4px">Welcome Back 👋</h2>
+      <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:24px">Sign in to your SkillSync account</p>
+      <button class="social-btn" onclick="doLogin('google')">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="G"> Continue with Google
+      </button>
+      <div class="divider">or continue with email</div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="login-email" placeholder="you@example.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="login-pass" placeholder="Your password" onkeydown="if(event.key==='Enter')doLogin('email')"></div>
+      <button class="btn btn-primary" style="width:100%;padding:13px;font-size:1rem;justify-content:center;margin-top:4px" onclick="doLogin('email')">Sign In →</button>
+      <p style="text-align:center;margin-top:18px;font-size:.88rem;color:var(--text-muted)">Don't have an account? <a href="#" style="color:var(--purple);font-weight:700;text-decoration:none" onclick="showScreen('signup')">Sign Up</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SIGNUP ============ -->
+<div class="screen" id="screen-signup" style="align-items:center;justify-content:center">
+  <div style="width:100%;max-width:440px;padding:24px 20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
+      <div class="brand">✨ SkillSync AI</div>
+      <button class="btn btn-outline btn-sm" onclick="showScreen('landing')">← Back</button>
+    </div>
+    <div class="card anim">
+      <h2 style="font-size:1.7rem;margin-bottom:4px">Create Account ✨</h2>
+      <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:24px">Join SkillSync AI today — it's free!</p>
+      <button class="social-btn" onclick="doLogin('google')">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="G"> Sign up with Google
+      </button>
+      <div class="divider">or sign up with email</div>
+      <div class="form-group"><label>Full Name</label><input type="text" id="signup-name" placeholder="Your full name"></div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="signup-email" placeholder="you@example.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="signup-pass" placeholder="Create a password" onkeydown="if(event.key==='Enter')doLogin('signup')"></div>
+      <button class="btn btn-primary" style="width:100%;padding:13px;font-size:1rem;justify-content:center;margin-top:4px" onclick="doLogin('signup')">Create Account →</button>
+      <p style="text-align:center;margin-top:18px;font-size:.88rem;color:var(--text-muted)">Already have an account? <a href="#" style="color:var(--purple);font-weight:700;text-decoration:none" onclick="showScreen('login')">Sign In</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div class="screen" id="screen-app">
+  <nav class="app-nav">
+    <div class="brand" onclick="brandClick()">✨ SkillSync AI</div>
+    <div class="nav-links">
+      <a onclick="goTo('analyse')" id="nav-analyse">🎯 Analysis</a>
+      <a onclick="goTo('results')" id="nav-results">📊 Results</a>
+      <a onclick="goTo('roadmap')" id="nav-roadmap">🗺 Roadmap</a>
+      <a onclick="goTo('courses')" id="nav-courses">📚 Courses</a>
+      <a onclick="goTo('progress')" id="nav-progress">📝 Progress</a>
+      <a onclick="goTo('profile')" id="nav-profile">👤 Profile</a>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span style="font-size:.82rem;color:var(--text-muted);font-weight:600" id="nav-username"></span>
+      <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- ANALYSE -->
+  <div class="page active" id="page-analyse">
+    <h1 class="section-title anim">🎯 Skill <span class="hi">Analysis</span></h1>
+    <p class="section-sub anim2">Tell us your dream job and the skills you already have</p>
+    <div class="card anim2" style="max-width:620px;margin:0 auto">
+      <div class="form-group"><label>🚀 Your Dream Job</label><input type="text" id="dream-job" placeholder="e.g. Data Engineer, Web Developer, ML Engineer…"></div>
+      <div class="form-group">
+        <label>💡 Skills You Already Have</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="skill-input" placeholder="Type a skill and press Enter or Add" onkeydown="if(event.key==='Enter')addSkill()">
+          <button class="btn btn-primary" style="white-space:nowrap;padding:10px 16px" onclick="addSkill()">+ Add</button>
+        </div>
+        <div class="tag-area" id="skill-tags"></div>
+      </div>
+      <div class="form-group"><label>⏱ Hours Available Per Week</label>
+        <select id="hours-week">
+          <option value="5">~5 hours/week (casual)</option>
+          <option value="10" selected>~10 hours/week (moderate)</option>
+          <option value="20">~20 hours/week (intensive)</option>
+          <option value="40">~40 hours/week (full-time)</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="width:100%;padding:13px;font-size:1rem;justify-content:center;margin-top:6px" onclick="analyzeSkills()">🔍 Analyze My Skills →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="page" id="page-results">
+    <h1 class="section-title anim">Analysis for <span class="hi" id="result-job-title">—</span></h1>
+    <p style="color:var(--text-muted);margin-bottom:24px">Here's how your skills stack up against the requirements.</p>
+    <div id="results-loading" class="loading"><div class="spinner"></div><br>Analysing your skills with AI…</div>
+    <div id="results-content" style="display:none">
+      <div class="card anim" style="text-align:center;max-width:360px;margin:0 auto 20px">
+        <div class="circle-wrap">
+          <svg class="circle-svg" viewBox="0 0 120 120">
+            <defs><linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#3b82f6"/></linearGradient></defs>
+            <circle class="circle-track" cx="60" cy="60" r="54"/>
+            <circle class="circle-fill" id="score-circle" cx="60" cy="60" r="54" transform="rotate(-90 60 60)"/>
+            <text class="circle-text" x="60" y="66" text-anchor="middle" id="score-text">0%</text>
+          </svg>
+          <div class="circle-lbl">Skill Gap Score</div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card anim2"><div style="font-size:1.05rem;font-weight:700;margin-bottom:12px;color:var(--success)">✅ Skills You Have</div><div id="skills-have"></div></div>
+        <div class="card anim2"><div style="font-size:1.05rem;font-weight:700;margin-bottom:12px;color:#ef4444">❌ Skills to Learn</div><div id="skills-need"></div></div>
+      </div>
+      <div class="mt" style="display:flex;gap:14px;flex-wrap:wrap">
+        <button class="btn btn-primary" style="flex:1;padding:13px;justify-content:center" onclick="goTo('roadmap')">🗺 View Learning Roadmap →</button>
+        <button class="btn btn-outline" style="flex:1;padding:13px;justify-content:center" onclick="goTo('courses')">📚 Browse Courses →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="page" id="page-roadmap">
+    <h1 class="section-title anim">🗺 Learning <span class="hi">Roadmap</span></h1>
+    <p class="section-sub anim2">Your personalized week-by-week learning plan — mark each week as you complete it!</p>
+    <div id="roadmap-loading" class="loading"><div class="spinner"></div><br>Generating your roadmap…</div>
+    <div id="roadmap-content"></div>
+    <div id="roadmap-footer" style="display:none;margin-top:10px">
+      <button class="btn btn-primary" style="width:100%;padding:14px;font-size:1rem;justify-content:center" onclick="goTo('courses')">📚 View Course Recommendations →</button>
+    </div>
+  </div>
+
+  <!-- COURSES -->
+  <div class="page" id="page-courses">
+    <h1 class="section-title anim">📚 Course <span class="hi">Recommendations</span></h1>
+    <p class="section-sub anim2">Curated free and paid resources for your goals — click Start Learning to begin!</p>
+    <div id="courses-loading" class="loading"><div class="spinner"></div><br>Finding the best courses for you…</div>
+    <div id="courses-content"></div>
+  </div>
+
+  <!-- PROGRESS (redesigned like image 1) -->
+  <div class="page" id="page-progress">
+    <h1 class="section-title anim"><span class="hi">Progress</span> Tracker</h1>
+    <p class="section-sub anim2" id="prog-subtitle">Track your learning progress.</p>
+
+    <!-- Overall Completion Card -->
+    <div class="card anim2">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="font-size:1.1rem;font-weight:700">Overall Completion</div>
+          <div style="color:var(--text-muted);font-size:.88rem;margin-top:4px" id="prog-skill-count">0 of 0 skills completed</div>
+        </div>
+        <div style="font-size:2.2rem;font-weight:700;color:var(--purple);font-family:'Clash Display'" id="prog-pct-big">0%</div>
+      </div>
+      <!-- Progress Bar -->
+      <div class="prog-bar-wrap" style="margin:16px 0;height:12px">
+        <div class="prog-bar" id="prog-bar-main" style="width:0%"></div>
+      </div>
+      <!-- Bar Chart -->
+      <div class="bar-chart" id="skills-barchart"></div>
+      <div style="text-align:center;font-size:.8rem;color:var(--text-muted)">Each bar represents a skill</div>
+    </div>
+
+    <!-- Skill Checklist Card -->
+    <div class="card mt anim3">
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:16px">Skill Checklist</div>
+      <div id="skill-checklist"><div style="color:var(--text-muted);font-size:.9rem">Complete an analysis first to see your skill checklist.</div></div>
+    </div>
+
+    <!-- Completed Courses -->
+    <div class="card mt anim3">
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:14px">🏆 Completed Courses</div>
+      <div id="completed-courses-list"><div style="color:var(--text-muted);font-size:.9rem">No completed courses yet. Go to Courses and mark them!</div></div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="page" id="page-profile">
+    <h1 class="section-title anim">👤 <span class="hi">Profile</span></h1>
+    <div class="card anim2" style="max-width:700px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap">
+        <div class="avatar" id="prof-avatar">S</div>
+        <div><div style="font-weight:700;font-size:1.2rem" id="prof-name">Student</div><div style="color:var(--text-muted);font-size:.9rem" id="prof-email">user@example.com</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;font-size:.92rem">
+        <div>👤 <strong>Name:</strong> <span id="prof-name2">—</span></div>
+        <div>✉️ <strong>Email:</strong> <span id="prof-email2">—</span></div>
+        <div>🎯 <strong>Dream Job:</strong> <span id="prof-job">Not set yet</span></div>
+        <div>⏱ <strong>Hours/Week:</strong> <span id="prof-hours">—</span></div>
+        <div>📅 <strong>Member Since:</strong> <span id="prof-since">—</span></div>
+      </div>
+      <div class="stat-grid" id="prof-stats"></div>
+    </div>
+    <div class="card mt anim3" style="max-width:700px">
+      <div style="font-size:1.05rem;font-weight:700;margin-bottom:14px">✨ Skills Learned</div>
+      <div id="prof-skills-learned"></div>
+    </div>
+    <div class="card mt anim3" style="max-width:700px">
+      <div style="font-size:1.05rem;font-weight:700;margin-bottom:14px">🎯 Goals (Skills to Learn)</div>
+      <div id="prof-goals"></div>
+    </div>
+  </div>
+</div><!-- /screen-app -->
+
+<!-- ============ CHATBOT ============ -->
+<button id="chatbot-toggle" onclick="toggleChat()">💬</button>
+<div id="chatbot-box">
+  <div class="chat-header">
+    <span>🤖 SkillSync Assistant</span>
+    <span style="cursor:pointer;font-size:1.1rem;opacity:.8" onclick="toggleChat()">✕</span>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="msg msg-bot">Hi! I'm your SkillSync AI Assistant 🚀 Ask me anything — job roles, skills to learn, how to get started, or career advice. I'm here to help!</div>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chat-input" placeholder="Ask me anything…" onkeydown="if(event.key==='Enter')sendChat()">
+    <button onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<!-- ============ ADMIN PANEL ============ -->
+<div id="admin-panel" onclick="if(event.target===this)closeAdmin()">
+  <div class="admin-box">
+    <div class="admin-header">
+      <div>
+        <div style="font-size:1.2rem;font-weight:700">🔐 Admin Panel</div>
+        <div style="font-size:.8rem;opacity:.7;margin-top:2px">SkillSync AI — Registered Users</div>
+      </div>
+      <button onclick="closeAdmin()" style="background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer;font-weight:700">✕ Close</button>
+    </div>
+    <div class="admin-body">
+      <div id="admin-pass-wrap">
+        <p style="margin-bottom:12px;color:var(--text-muted);font-size:.9rem">Enter admin password to view user data:</p>
+        <div style="display:flex;gap:10px">
+          <input type="password" id="admin-pass-input" placeholder="Admin password" onkeydown="if(event.key==='Enter')checkAdminPass()" style="flex:1">
+          <button class="btn btn-primary btn-sm" onclick="checkAdminPass()">Unlock</button>
+        </div>
+        <div id="admin-pass-err" style="color:#ef4444;font-size:.85rem;margin-top:8px;display:none">Incorrect password. Try again.</div>
+      </div>
+      <div id="admin-data-wrap" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div style="font-weight:700;color:var(--purple)">Total Users: <span id="admin-total">0</span></div>
+          <button class="btn btn-outline btn-sm" onclick="loadAdminData()">🔄 Refresh</button>
+        </div>
+        <div id="admin-table-wrap"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const S = {
+  user: null,
+  dreamJob: '', skills: [], hoursPerWeek: 10,
+  matchScore: 0, skillsHave: [], skillsNeed: [],
+  roadmap: [], courses: [], 
+  completedCourses: new Set(),
+  completedWeeks: new Set(),
+  learnedSkills: new Set(),   // for checklist toggling
+  chatHistory: [],             // full conversation for context
+  resultsReady: false, roadmapReady: false, coursesReady: false
+};
+
+const ADMIN_PASSWORD = 'skillsync2026';
+let brandClickCount = 0, brandClickTimer = null;
+
+// ============================================================
+// SCREEN ROUTING
+// ============================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ============================================================
+// AUTH + USER DATABASE
+// ============================================================
+async function doLogin(method) {
+  let name = 'Student', email = 'user@example.com';
+  if (method === 'signup') {
+    name  = document.getElementById('signup-name').value.trim() || 'Student';
+    email = document.getElementById('signup-email').value.trim() || 'user@example.com';
+  } else if (method === 'email') {
+    email = document.getElementById('login-email').value.trim() || 'user@example.com';
+    name  = email.split('@')[0];
+    name  = name.charAt(0).toUpperCase() + name.slice(1);
+  } else {
+    name = 'GoogleUser'; email = 'googleuser@gmail.com';
+  }
+  const joinDate = new Date().toLocaleDateString('en-IN', { year:'numeric', month:'short', day:'numeric' });
+  S.user = { name, email, joinDate };
+  
+  // Save to shared database storage
+  await saveUserToDb({ name, email, joinDate, method, lastLogin: new Date().toISOString() });
+  
+  document.getElementById('nav-username').textContent = name;
+  document.getElementById('chatbot-toggle').style.display = 'flex';
+  showScreen('app');
+  goTo('analyse');
+}
+
+async function saveUserToDb(userData) {
+  try {
+    if (window.storage) {
+      const key = 'user:' + userData.email.replace(/[^a-zA-Z0-9]/g, '_');
+      await window.storage.set(key, JSON.stringify(userData), true);
+    }
+  } catch(e) { /* storage not available in this env */ }
+}
+
+function logout() {
+  S.user = null; S.dreamJob = ''; S.skills = [];
+  S.skillsHave = []; S.skillsNeed = []; S.roadmap = []; S.courses = [];
+  S.completedCourses = new Set(); S.completedWeeks = new Set(); S.learnedSkills = new Set();
+  S.resultsReady = false; S.roadmapReady = false; S.coursesReady = false; S.chatHistory = [];
+  document.getElementById('chatbot-toggle').style.display = 'none';
+  document.getElementById('chatbot-box').style.display = 'none';
+  showScreen('landing');
+}
+
+// ============================================================
+// ADMIN PANEL
+// ============================================================
+function brandClick() {
+  brandClickCount++;
+  clearTimeout(brandClickTimer);
+  brandClickTimer = setTimeout(() => { brandClickCount = 0; }, 1000);
+  if (brandClickCount >= 5) {
+    brandClickCount = 0;
+    document.getElementById('admin-panel').style.display = 'flex';
+    document.getElementById('admin-pass-input').value = '';
+    document.getElementById('admin-pass-err').style.display = 'none';
+    document.getElementById('admin-pass-wrap').style.display = 'block';
+    document.getElementById('admin-data-wrap').style.display = 'none';
+  }
+}
+
+function closeAdmin() {
+  document.getElementById('admin-panel').style.display = 'none';
+}
+
+async function checkAdminPass() {
+  const pass = document.getElementById('admin-pass-input').value;
+  if (pass === ADMIN_PASSWORD) {
+    document.getElementById('admin-pass-wrap').style.display = 'none';
+    document.getElementById('admin-data-wrap').style.display = 'block';
+    await loadAdminData();
+  } else {
+    document.getElementById('admin-pass-err').style.display = 'block';
+  }
+}
+
+async function loadAdminData() {
+  const wrap = document.getElementById('admin-table-wrap');
+  wrap.innerHTML = '<div style="color:var(--text-muted)">Loading users…</div>';
+  try {
+    if (!window.storage) {
+      wrap.innerHTML = '<div style="color:var(--text-muted);padding:16px;background:#f8f9fa;border-radius:10px;">ℹ️ Database storage is available when viewing this as a Claude artifact. Open this file inside Claude.ai to see stored users.</div>';
+      document.getElementById('admin-total').textContent = '—';
+      return;
+    }
+    const result = await window.storage.list('user:', true);
+    const keys = result ? result.keys : [];
+    document.getElementById('admin-total').textContent = keys.length;
+    if (keys.length === 0) {
+      wrap.innerHTML = '<div style="color:var(--text-muted);padding:20px;text-align:center">No users registered yet.</div>';
+      return;
+    }
+    const users = [];
+    for (const key of keys) {
+      try {
+        const r = await window.storage.get(key, true);
+        if (r) users.push(JSON.parse(r.value));
+      } catch {}
+    }
+    wrap.innerHTML = `<div style="overflow-x:auto"><table class="admin-table">
+      <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Method</th><th>Joined</th><th>Last Login</th></tr></thead>
+      <tbody>${users.map((u,i) => `<tr>
+        <td>${i+1}</td>
+        <td><strong>${escHtml(u.name||'—')}</strong></td>
+        <td>${escHtml(u.email||'—')}</td>
+        <td><span class="badge badge-plat">${escHtml(u.method||'email')}</span></td>
+        <td>${escHtml(u.joinDate||'—')}</td>
+        <td style="font-size:.8rem;color:var(--text-muted)">${u.lastLogin ? new Date(u.lastLogin).toLocaleString('en-IN') : '—'}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>`;
+  } catch(e) {
+    wrap.innerHTML = `<div style="color:#ef4444;font-size:.9rem">Error loading data: ${e.message}</div>`;
+  }
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ============================================================
+// IN-APP NAVIGATION
+// ============================================================
+function goTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+  if (page === 'results')  renderResults();
+  if (page === 'roadmap')  renderRoadmap();
+  if (page === 'courses')  renderCourses();
+  if (page === 'progress') renderProgress();
+  if (page === 'profile')  renderProfile();
+}
+
+// ============================================================
+// SKILL TAGS
+// ============================================================
+function addSkill() {
+  const inp = document.getElementById('skill-input');
+  const val = inp.value.trim();
+  if (!val || S.skills.includes(val)) { inp.value = ''; return; }
+  S.skills.push(val);
+  renderTags(); inp.value = '';
+}
+function removeSkillAt(i) { S.skills.splice(i, 1); renderTags(); }
+function renderTags() {
+  document.getElementById('skill-tags').innerHTML = S.skills.map((s, i) =>
+    `<div class="tag">${s} <span class="rm" onclick="removeSkillAt(${i})">×</span></div>`
+  ).join('');
+}
+
+// ============================================================
+// ANALYZE
+// ============================================================
+function analyzeSkills() {
+  const job = document.getElementById('dream-job').value.trim();
+  if (!job) { alert('Please enter your dream job!'); return; }
+  if (S.skills.length === 0) { alert('Please add at least one skill!'); return; }
+  S.dreamJob = job;
+  S.hoursPerWeek = parseInt(document.getElementById('hours-week').value);
+  S.resultsReady = false; S.roadmapReady = false; S.coursesReady = false;
+  S.roadmap = []; S.courses = []; S.learnedSkills = new Set();
+  goTo('results');
+}
+
+// ============================================================
+// RESULTS
+// ============================================================
+async function renderResults() {
+  document.getElementById('result-job-title').textContent = S.dreamJob;
+  if (S.resultsReady) { showResultsContent(); return; }
+  document.getElementById('results-loading').style.display = 'block';
+  document.getElementById('results-content').style.display = 'none';
+  try {
+    const res = await callAPI([{ role:'user', content:
+      `You are a career skills analyzer. The user wants to become a "${S.dreamJob}". They currently know: ${S.skills.join(', ')}.
+Respond ONLY with valid JSON (no markdown, no extra text):
+{"matchScore":<integer 0-100>,"skillsHave":[<array of skills from their list that ARE relevant to ${S.dreamJob}>],"skillsNeed":[<array of 5-8 important skills they are MISSING for ${S.dreamJob}>]}`
+    }]);
+    const p = JSON.parse(res);
+    S.matchScore = p.matchScore || 0;
+    S.skillsHave = p.skillsHave || S.skills;
+    S.skillsNeed = p.skillsNeed || [];
+    // pre-mark skills they have as learned
+    S.skillsHave.forEach(s => S.learnedSkills.add(s));
+  } catch(e) {
+    S.matchScore = Math.min(80, Math.round((S.skills.length/(S.skills.length+4))*100));
+    S.skillsHave = [...S.skills];
+    S.skillsNeed = ['System Design','Cloud Deployment','Advanced Debugging','Security Best Practices','Testing & CI/CD'];
+    S.skillsHave.forEach(s => S.learnedSkills.add(s));
+  }
+  S.resultsReady = true;
+  showResultsContent();
+}
+function showResultsContent() {
+  document.getElementById('results-loading').style.display = 'none';
+  document.getElementById('results-content').style.display = 'block';
+  const offset = 339 - (339 * S.matchScore / 100);
+  setTimeout(() => {
+    document.getElementById('score-circle').style.strokeDashoffset = offset;
+    document.getElementById('score-text').textContent = S.matchScore + '%';
+  }, 120);
+  document.getElementById('skills-have').innerHTML = S.skillsHave.length
+    ? S.skillsHave.map(s=>`<div class="skill-item"><span style="color:var(--success);font-size:1.1rem">✓</span>${s}</div>`).join('')
+    : '<div style="color:var(--text-muted);font-size:.9rem">No matching skills yet.</div>';
+  document.getElementById('skills-need').innerHTML = S.skillsNeed
+    .map(s=>`<div class="skill-item"><span style="color:#ef4444;font-size:1.1rem">✕</span>${s}</div>`).join('');
+}
+
+// ============================================================
+// ROADMAP
+// ============================================================
+async function renderRoadmap() {
+  if (S.roadmapReady) { showRoadmapContent(); return; }
+  if (!S.dreamJob) {
+    document.getElementById('roadmap-loading').style.display = 'none';
+    document.getElementById('roadmap-content').innerHTML = '<div class="card" style="color:var(--text-muted)">Please complete an analysis first.</div>';
+    return;
+  }
+  document.getElementById('roadmap-loading').style.display = 'block';
+  document.getElementById('roadmap-footer').style.display = 'none';
+  document.getElementById('roadmap-content').innerHTML = '';
+  const weeks = S.hoursPerWeek<=5?10:S.hoursPerWeek<=10?8:S.hoursPerWeek<=20?6:4;
+  try {
+    const raw = await callAPI([{ role:'user', content:
+      `Create a ${weeks}-week learning roadmap for someone wanting to become a "${S.dreamJob}". They need to learn: ${S.skillsNeed.join(', ')}. They have ${S.hoursPerWeek} hours/week available.
+Respond ONLY with a valid JSON array (no markdown, no extra text):
+[{"week":1,"title":"Short descriptive title","hours":${S.hoursPerWeek},"topics":["Specific topic 1","Specific topic 2","Specific topic 3"]}]
+Make exactly ${weeks} weeks. Be specific, practical, and progressive. Each week should build on the previous.`
+    }]);
+    S.roadmap = JSON.parse(raw);
+  } catch {
+    S.roadmap = S.skillsNeed.slice(0,6).map((skill,i)=>({
+      week:i+1, title:`Master ${skill}`, hours:S.hoursPerWeek,
+      topics:[`Introduction to ${skill}`,`Hands-on ${skill} exercises`,`${skill} real-world project`]
+    }));
+  }
+  S.roadmapReady = true;
+  document.getElementById('roadmap-loading').style.display = 'none';
+  showRoadmapContent();
+}
+function showRoadmapContent() {
+  document.getElementById('roadmap-content').innerHTML = S.roadmap.map((w,i) => {
+    const done = S.completedWeeks.has(i);
+    return `<div class="week-card${done?' done':''}" id="wk-${i}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+        <div>
+          <div class="week-title">${done?'✅ ':''} Week ${w.week}: ${w.title}</div>
+          <div class="week-hours">⏱ ${w.hours} hours this week</div>
+        </div>
+        ${done ? `<span style="font-size:.8rem;font-weight:700;color:var(--success);background:#d1fae5;padding:4px 12px;border-radius:20px;">Completed ✓</span>` : ''}
+      </div>
+      <ul class="week-topics">${w.topics.map(t=>`<li>${t}</li>`).join('')}</ul>
+      <div class="week-footer">
+        ${done
+          ? `<button class="btn-week-done" onclick="toggleWeek(${i})">↩ Unmark</button>`
+          : `<button class="btn btn-outline btn-sm" onclick="toggleWeek(${i})" style="border-color:var(--success);color:var(--success)">✓ Mark as Completed</button>`
+        }
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('roadmap-footer').style.display = 'block';
+}
+function toggleWeek(i) {
+  S.completedWeeks.has(i) ? S.completedWeeks.delete(i) : S.completedWeeks.add(i);
+  showRoadmapContent();
+}
+
+// ============================================================
+// COURSES
+// ============================================================
+async function renderCourses() {
+  if (S.coursesReady) { showCoursesContent(); return; }
+  if (!S.dreamJob) {
+    document.getElementById('courses-loading').style.display = 'none';
+    document.getElementById('courses-content').innerHTML = '<div class="card" style="color:var(--text-muted)">Please complete an analysis first.</div>';
+    return;
+  }
+  document.getElementById('courses-loading').style.display = 'block';
+  document.getElementById('courses-content').innerHTML = '';
+  try {
+    const raw = await callAPI([{ role:'user', content:
+      `Recommend 8 learning resources for someone becoming a "${S.dreamJob}" who needs to learn: ${S.skillsNeed.join(', ')}.
+Include a mix: YouTube free videos, freeCodeCamp, Coursera free tier, and Udemy paid courses.
+Respond ONLY with a valid JSON array (no markdown, no extra text):
+[{"name":"Exact course name","platform":"YouTube or freeCodeCamp or Udemy or Coursera","type":"free or paid","skill":"specific skill it covers","url":"https://...","duration":"e.g. 8 hours"}]
+URL rules: YouTube -> https://www.youtube.com/results?search_query=learn+TOPIC (replace TOPIC), freeCodeCamp -> https://www.freecodecamp.org/, Udemy -> https://www.udemy.com/courses/search/?q=TOPIC`
+    }]);
+    S.courses = JSON.parse(raw);
+  } catch {
+    S.courses = S.skillsNeed.slice(0,4).flatMap(skill=>[
+      {name:`Learn ${skill} - Full Course`,platform:'YouTube',type:'free',skill,url:`https://www.youtube.com/results?search_query=learn+${encodeURIComponent(skill)}`,duration:'6 hrs'},
+      {name:`${skill} Bootcamp`,platform:'freeCodeCamp',type:'free',skill,url:'https://www.freecodecamp.org/',duration:'10 hrs'}
+    ]);
+  }
+  S.coursesReady = true;
+  document.getElementById('courses-loading').style.display = 'none';
+  showCoursesContent();
+}
+function showCoursesContent() {
+  const icons = {YouTube:'▶️',freeCodeCamp:'🏕',Udemy:'📘',Coursera:'🎓'};
+  document.getElementById('courses-content').innerHTML = S.courses.map((c,i) => {
+    const done = S.completedCourses.has(i);
+    return `<div class="course-card" id="course-${i}" style="${done?'border-left:4px solid var(--success)':''}">
+      <div class="course-icon">${icons[c.platform]||'📖'}</div>
+      <div class="course-info">
+        <div class="course-name">${c.name}</div>
+        <div class="course-meta">
+          <span class="badge ${c.type==='free'?'badge-free':'badge-plat'}">${c.type==='free'?'FREE':'PAID'}</span>
+          <span class="badge badge-yt">${c.platform}</span>
+          ${c.skill?`<span style="font-size:.78rem;color:var(--text-muted)">• ${c.skill}</span>`:''}
+          ${c.duration?`<span style="font-size:.78rem;color:var(--text-muted)"> • ${c.duration}</span>`:''}
+        </div>
+        <div class="course-actions">
+          <a href="${c.url}" target="_blank" rel="noopener" style="text-decoration:none">
+            <button class="btn btn-primary btn-sm">Start Learning ↗</button>
+          </a>
+          <button class="${done?'btn-success':''} btn-sm" onclick="toggleCourse(${i})"
+            style="${!done?'background:rgba(255,255,255,.8);border:1.5px solid #c4b5fd;color:var(--purple);border-radius:8px;padding:7px 14px;font-size:.8rem;cursor:pointer;font-family:inherit;font-weight:600':'border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-weight:600'}">
+            ${done?'Skill Learned! ✅':'Mark as Completed ✅'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function toggleCourse(i) {
+  S.completedCourses.has(i) ? S.completedCourses.delete(i) : S.completedCourses.add(i);
+  showCoursesContent();
+}
+
+// ============================================================
+// PROGRESS (redesigned)
+// ============================================================
+function renderProgress() {
+  const allSkills = [...new Set([...S.skillsHave, ...S.skillsNeed])];
+  const totalSkills = allSkills.length || 1;
+  const learnedCount = S.learnedSkills.size;
+  const pct = Math.round((learnedCount / totalSkills) * 100);
+
+  // subtitle
+  document.getElementById('prog-subtitle').textContent = S.dreamJob
+    ? `Track your learning progress for ${S.dreamJob}.`
+    : 'Complete an analysis to track your progress.';
+
+  // Overall card
+  document.getElementById('prog-skill-count').textContent = `${learnedCount} of ${totalSkills} skills completed`;
+  document.getElementById('prog-pct-big').textContent = pct + '%';
+  setTimeout(() => { document.getElementById('prog-bar-main').style.width = pct + '%'; }, 100);
+
+  // Bar chart
+  const barContainer = document.getElementById('skills-barchart');
+  if (allSkills.length === 0) {
+    barContainer.innerHTML = '<div style="color:var(--text-muted);font-size:.85rem;align-self:center">No data yet</div>';
+  } else {
+    const bars = allSkills.map(s => {
+      const learned = S.learnedSkills.has(s);
+      const have = S.skillsHave.includes(s);
+      const h = learned ? 70 : have ? 55 : 25;
+      const bg = learned ? 'linear-gradient(to top,#6d28d9,#818cf8)' : have ? 'linear-gradient(to top,#a78bfa,#c4b5fd)' : '#d1d5db';
+      return `<div class="bar-item" style="height:${h}px;background:${bg}" title="${s}"></div>`;
+    });
+    barContainer.innerHTML = bars.join('');
+  }
+
+  // Skill Checklist
+  const cl = document.getElementById('skill-checklist');
+  if (allSkills.length === 0) {
+    cl.innerHTML = '<div style="color:var(--text-muted);font-size:.9rem">Complete an analysis first to see your skill checklist.</div>';
+  } else {
+    cl.innerHTML = allSkills.map(s => {
+      const have = S.skillsHave.includes(s);
+      const learned = S.learnedSkills.has(s);
+      return `<div class="checklist-item ${learned?'checked':''}" onclick="toggleLearn('${s.replace(/'/g,"\\'")}')">
+        <div class="checklist-circle">${learned?'✓':''}</div>
+        <div class="checklist-name">${s}</div>
+        ${have ? `<span class="badge badge-known">Already known</span>` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  // Completed Courses
+  const done = [...S.completedCourses].map(i=>S.courses[i]).filter(Boolean);
+  document.getElementById('completed-courses-list').innerHTML = done.length
+    ? done.map(c=>`<div class="skill-item"><span style="color:var(--success)">✓</span><strong>${c.name}</strong><span style="font-size:.8rem;color:var(--text-muted);margin-left:6px">(${c.platform})</span></div>`).join('')
+    : '<div style="color:var(--text-muted);font-size:.9rem">No completed courses yet. Go to Courses and mark them!</div>';
+}
+
+function toggleLearn(skill) {
+  if (S.learnedSkills.has(skill)) S.learnedSkills.delete(skill);
+  else S.learnedSkills.add(skill);
+  renderProgress();
+}
+
+// ============================================================
+// PROFILE
+// ============================================================
+function renderProfile() {
+  if (!S.user) return;
+  const { name, email, joinDate } = S.user;
+  document.getElementById('prof-avatar').textContent = name.charAt(0).toUpperCase();
+  document.getElementById('prof-name').textContent = name;
+  document.getElementById('prof-email').textContent = email;
+  document.getElementById('prof-name2').textContent = name;
+  document.getElementById('prof-email2').textContent = email;
+  document.getElementById('prof-job').textContent = S.dreamJob || 'Not set yet';
+  document.getElementById('prof-hours').textContent = S.dreamJob ? `${S.hoursPerWeek} hrs/week` : '—';
+  document.getElementById('prof-since').textContent = joinDate || '—';
+  document.getElementById('prof-stats').innerHTML = `
+    <div class="stat-box"><div class="stat-num">${S.skillsHave.length}</div><div class="stat-lbl">Skills Have</div></div>
+    <div class="stat-box"><div class="stat-num">${S.skillsNeed.length}</div><div class="stat-lbl">To Learn</div></div>
+    <div class="stat-box"><div class="stat-num">${S.completedCourses.size}</div><div class="stat-lbl">Courses Done</div></div>
+    <div class="stat-box"><div class="stat-num">${S.matchScore}%</div><div class="stat-lbl">Match Score</div></div>
+    <div class="stat-box"><div class="stat-num">${S.completedWeeks.size}</div><div class="stat-lbl">Weeks Done</div></div>`;
+  document.getElementById('prof-skills-learned').innerHTML = S.skillsHave.length
+    ? '<div class="tag-area">'+S.skillsHave.map(s=>`<div class="tag">✓ ${s}</div>`).join('')+'</div>'
+    : '<div style="color:var(--text-muted);font-size:.9rem">No skills recorded yet.</div>';
+  document.getElementById('prof-goals').innerHTML = S.skillsNeed.length
+    ? S.skillsNeed.map(s=>`<div class="skill-item"><span style="color:var(--purple)">🎯</span>${s}</div>`).join('')
+    : '<div style="color:var(--text-muted);font-size:.9rem">Complete an analysis to see your goals.</div>';
+}
+
+// ============================================================
+// CHATBOT (ChatGPT-style with full conversation history)
+// ============================================================
+function toggleChat() {
+  const box = document.getElementById('chatbot-box');
+  box.style.display = (box.style.display==='flex') ? 'none' : 'flex';
+  if (box.style.display==='flex') { box.style.flexDirection='column'; document.getElementById('chat-input').focus(); }
+}
+
+async function sendChat() {
+  const inp = document.getElementById('chat-input');
+  const msg = inp.value.trim();
+  if (!msg) return;
+  inp.value = '';
+
+  appendMsg(msg, 'user');
+
+  // Add to history
+  S.chatHistory.push({ role:'user', content: msg });
+
+  // Show typing indicator
+  const typingEl = showTyping();
+
+  // Build system context
+  const systemContext = buildSystemContext();
+
+  // Build messages array with full history
+  const messages = [
+    { role:'user', content: systemContext + '\n\nUser: ' + S.chatHistory[0].content },
+    ...S.chatHistory.slice(1)
+  ];
+
+  try {
+    const reply = await callAPI(messages);
+    removeTyping(typingEl);
+    S.chatHistory.push({ role:'assistant', content: reply });
+    appendMsg(reply, 'bot');
+  } catch(e) {
+    removeTyping(typingEl);
+    const errMsg = 'Sorry, I had trouble connecting. Please try again!';
+    appendMsg(errMsg, 'bot');
+    S.chatHistory.push({ role:'assistant', content: errMsg });
+  }
+}
+
+function buildSystemContext() {
+  const ctx = S.dreamJob
+    ? `You are SkillSync AI's intelligent career assistant — like ChatGPT but specialized in career development, skills, jobs, and technology learning.
+
+The user's current profile:
+- Dream Job: ${S.dreamJob}
+- Skills they have: ${S.skillsHave.join(', ') || 'not specified'}
+- Skills they need to learn: ${S.skillsNeed.join(', ') || 'not specified'}
+- Hours/week for learning: ${S.hoursPerWeek}
+
+You can answer ANY question the user has — job roles, required skills for any career, how to learn technologies, salary ranges, interview tips, course recommendations, learning strategies, programming help, and more. Be thorough, friendly, and helpful like ChatGPT. Format your answers clearly. If asked about job roles or career paths, explain them confidently.`
+    : `You are SkillSync AI's intelligent career assistant — like ChatGPT but specialized in career development, skills, jobs, and technology learning. 
+
+You can answer ANY question the user has — job roles, required skills for any career, how to learn technologies, salary ranges, interview tips, course recommendations, learning strategies, programming help, and more. Be thorough, friendly, and helpful like ChatGPT. Format your answers clearly. If asked about job roles or career paths, explain them confidently.`;
+  return ctx;
+}
+
+function appendMsg(text, who) {
+  const div = document.createElement('div');
+  div.className = `msg msg-${who}`;
+  div.textContent = text;
+  const msgs = document.getElementById('chat-messages');
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function showTyping() {
+  const div = document.createElement('div');
+  div.className = 'chat-typing';
+  div.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+  const msgs = document.getElementById('chat-messages');
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function removeTyping(el) {
+  if (el && el.parentNode) el.parentNode.removeChild(el);
+}
+
+// ============================================================
+// CORE API CALL (used everywhere)
+// ============================================================
+async function callAPI(messages, maxTokens = 1500) {
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: maxTokens,
+      messages: messages
+    })
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(`API error ${response.status}: ${err}`);
+  }
+
+  const data = await response.json();
+  if (!data.content || !data.content.length) throw new Error('Empty response from API');
+  return data.content.map(b => b.text || '').join('').trim();
+}
+</script>
+</body>
+</html>
