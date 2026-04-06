@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillSync AI – Bridge Your Skill Gap</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─── THEME VARIABLES ─────────────────────────────── */
+[data-theme="light"] {
+  --bg: linear-gradient(135deg,#f9a8d4 0%,#c084fc 30%,#818cf8 60%,#93c5fd 100%);
+  --nav: rgba(255,255,255,0.75);
+  --card: rgba(255,255,255,0.92);
+  --card-b: rgba(255,255,255,0.6);
+  --text: #1e1b4b;
+  --muted: #64748b;
+  --inp: rgba(255,255,255,0.88);
+  --inp-b: #c4b5fd;
+  --week-bg: rgba(255,255,255,0.92);
+  --tag-bg: #ede9fe;
+  --prog-track: #e9d5ff;
+  --divider: #e2e8f0;
+  --social-bg: rgba(255,255,255,0.85);
+  --hero-sub: #475569;
+  --about-card: rgba(255,255,255,0.75);
+}
+[data-theme="dark"] {
+  --bg: linear-gradient(135deg,#0f0c29 0%,#302b63 40%,#1e3a5f 100%);
+  --nav: rgba(15,12,41,0.88);
+  --card: rgba(30,26,64,0.92);
+  --card-b: rgba(255,255,255,0.08);
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --inp: rgba(20,18,50,0.9);
+  --inp-b: #6d28d9;
+  --week-bg: rgba(30,26,64,0.92);
+  --tag-bg: rgba(109,40,217,0.25);
+  --prog-track: rgba(109,40,217,0.25);
+  --divider: rgba(255,255,255,0.1);
+  --social-bg: rgba(30,26,64,0.85);
+  --hero-sub: #94a3b8;
+  --about-card: rgba(30,26,64,0.75);
+}
+
+/* ─── BASE ─────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  min-height:100vh;
+  background:var(--bg);
+  background-attachment:fixed;
+  color:var(--text);
+  overflow-x:hidden;
+  transition:background .4s,color .3s;
+}
+h1,h2,h3,.brand{font-family:'Clash Display',sans-serif}
+
+/* ─── SCREENS ──────────────────────────────────────── */
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+
+/* ─── NAVBARS ──────────────────────────────────────── */
+.pub-nav,.app-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 5vw;
+  background:var(--nav);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--card-b);
+  position:sticky;top:0;z-index:100;
+  flex-wrap:wrap;gap:10px;
+  transition:background .4s;
+}
+.brand{font-size:1.2rem;font-weight:700;color:#7c3aed;letter-spacing:-.3px}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap}
+.nav-links a{
+  text-decoration:none;font-size:.75rem;font-weight:600;
+  padding:6px 10px;border-radius:8px;color:var(--text);
+  transition:all .2s;cursor:pointer;white-space:nowrap
+}
+.nav-links a:hover,.nav-links a.active{background:#7c3aed;color:#fff}
+.nav-right{display:flex;gap:8px;align-items:center}
+
+/* ─── THEME TOGGLE ─────────────────────────────────── */
+.theme-btn{
+  background:none;border:1.5px solid var(--inp-b);
+  border-radius:50%;width:36px;height:36px;
+  cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+  color:var(--text);transition:all .2s;flex-shrink:0
+}
+.theme-btn:hover{background:var(--tag-bg)}
+
+/* ─── BUTTONS ──────────────────────────────────────── */
+.btn{cursor:pointer;border:none;border-radius:12px;font-family:inherit;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-p{background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;padding:11px 24px;font-size:.92rem;box-shadow:0 4px 14px rgba(124,58,237,.35)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(124,58,237,.45)}
+.btn-o{background:var(--social-bg);border:1.5px solid var(--inp-b);color:#7c3aed;padding:10px 22px;font-size:.92rem}
+.btn-o:hover{background:var(--tag-bg)}
+.btn-sm{padding:7px 14px!important;font-size:.78rem!important;border-radius:8px!important}
+.btn-g{background:#10b981;color:#fff;padding:7px 14px;font-size:.78rem;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-weight:600}
+
+/* ─── CARDS ─────────────────────────────────────────── */
+.card{background:var(--card);border:1px solid var(--card-b);border-radius:20px;padding:28px;box-shadow:0 8px 32px rgba(124,58,237,.08);backdrop-filter:blur(8px);transition:background .4s}
+.mt{margin-top:20px}
+
+/* ─── FORMS ─────────────────────────────────────────── */
+label{font-size:.87rem;font-weight:600;color:var(--text);display:block;margin-bottom:6px}
+input,select,textarea{
+  width:100%;padding:12px 16px;border:1.5px solid var(--inp-b);
+  border-radius:12px;font-family:inherit;font-size:.93rem;
+  background:var(--inp);color:var(--text);outline:none;transition:all .2s
+}
+input:focus,select:focus,textarea:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.12)}
+.form-group{margin-bottom:18px}
+.tag-area{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag{background:var(--tag-bg);color:#7c3aed;border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:6px}
+.tag .rm{cursor:pointer;font-size:1rem}
+
+/* ─── SECTION HEADS ────────────────────────────────── */
+.sec-title{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:700;margin-bottom:6px}
+.sec-title .hi{color:#7c3aed}
+.sec-sub{color:var(--muted);margin-bottom:24px;font-size:.93rem}
+
+/* ─── INNER PAGES ───────────────────────────────────── */
+.page{display:none;flex:1;padding:36px 5vw}
+.page.active{display:block}
+
+/* ─── CIRCLE SCORE ──────────────────────────────────── */
+.circle-wrap{display:flex;flex-direction:column;align-items:center;padding:10px 0}
+.circle-svg{width:140px;height:140px}
+.c-track{fill:none;stroke:var(--prog-track);stroke-width:10}
+.c-fill{fill:none;stroke:url(#cg);stroke-width:10;stroke-linecap:round;stroke-dasharray:339;stroke-dashoffset:339;transition:stroke-dashoffset 1.2s ease}
+.c-txt{font-family:'Clash Display';font-size:1.25rem;font-weight:700;fill:#7c3aed}
+.c-lbl{font-size:.95rem;font-weight:600;margin-top:8px;color:var(--muted)}
+
+/* ─── SKILL ITEMS ───────────────────────────────────── */
+.skill-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--divider);font-size:.91rem}
+.skill-item:last-child{border-bottom:none}
+
+/* ─── ROADMAP ───────────────────────────────────────── */
+.week-card{background:var(--week-bg);border-radius:16px;padding:20px 24px;margin-bottom:14px;border-left:4px solid #7c3aed;box-shadow:0 4px 16px rgba(124,58,237,.07);transition:background .4s}
+.week-hdr{display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer}
+.week-num{background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
+.week-title{font-size:1rem;font-weight:700;color:#7c3aed}
+.week-hrs{font-size:.78rem;background:var(--tag-bg);color:#7c3aed;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px}
+.steps-list{list-style:none;margin-top:6px}
+.steps-list li{padding:7px 0 7px 12px;font-size:.88rem;color:var(--muted);border-left:2px solid var(--prog-track);margin-left:18px;margin-bottom:4px;line-height:1.5}
+.step-num{font-weight:700;color:#7c3aed;margin-right:6px}
+
+/* ─── COURSES ───────────────────────────────────────── */
+.course-card{background:var(--card);border-radius:16px;padding:18px 22px;margin-bottom:14px;display:flex;align-items:flex-start;gap:14px;border:1px solid var(--card-b);box-shadow:0 4px 14px rgba(124,58,237,.06);flex-wrap:wrap;transition:background .4s}
+.c-icon{font-size:1.8rem;flex-shrink:0}
+.c-info{flex:1;min-width:200px}
+.c-name{font-weight:700;font-size:.95rem;margin-bottom:4px;color:var(--text)}
+.c-meta{font-size:.78rem;color:var(--muted);margin-bottom:10px}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;margin-right:5px}
+.b-free{background:#d1fae5;color:#059669}
+.b-paid{background:#dbeafe;color:#1d4ed8}
+.b-yt{background:#fee2e2;color:#dc2626}
+.c-actions{display:flex;gap:8px;flex-wrap:wrap}
+.skill-filter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.sf-btn{padding:7px 16px;border-radius:20px;border:1.5px solid var(--inp-b);background:var(--social-bg);color:var(--text);font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s}
+.sf-btn.active,.sf-btn:hover{background:#7c3aed;color:#fff;border-color:#7c3aed}
+
+/* ─── PROGRESS ──────────────────────────────────────── */
+.prog-wrap{background:var(--prog-track);border-radius:20px;height:10px;overflow:hidden;margin:6px 0}
+.prog-bar{height:100%;background:linear-gradient(90deg,#7c3aed,#3b82f6);border-radius:20px;transition:width 1s ease}
+.prog-item{margin-bottom:16px}
+.prog-lbl{display:flex;justify-content:space-between;font-size:.86rem;font-weight:600;margin-bottom:3px}
+
+/* ─── PROFILE ───────────────────────────────────────── */
+.avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;flex-shrink:0}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px}
+.stat-box{background:var(--card);border-radius:14px;padding:16px;text-align:center;border:1px solid var(--card-b)}
+.stat-num{font-size:1.7rem;font-weight:700;color:#7c3aed;font-family:'Clash Display'}
+.stat-lbl{font-size:.76rem;color:var(--muted);margin-top:3px}
+
+/* ─── AUTH ──────────────────────────────────────────── */
+.social-btn{width:100%;padding:12px;border-radius:12px;border:1.5px solid var(--inp-b);background:var(--social-bg);font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;color:var(--text);transition:all .2s}
+.social-btn:hover{background:var(--tag-bg)}
+.divider{text-align:center;color:var(--muted);margin:16px 0;font-size:.83rem;position:relative}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:36%;height:1px;background:var(--divider)}
+.divider::before{left:0}.divider::after{right:0}
+
+/* ─── LOADING ────────────────────────────────────────── */
+.loading{text-align:center;padding:40px;color:var(--muted);font-size:.93rem}
+.spinner{display:inline-block;width:32px;height:32px;border:3px solid var(--prog-track);border-top-color:#7c3aed;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ─── ABOUT PAGE ─────────────────────────────────────── */
+.about-hero{text-align:center;padding:60px 5vw 40px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.step-card{background:var(--about-card);border-radius:20px;padding:24px 28px;margin-bottom:16px;display:flex;gap:18px;align-items:flex-start;border:1px solid var(--card-b);backdrop-filter:blur(8px)}
+.step-circle{background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;width:100%;max-width:900px;margin:32px auto 0}
+.feat-card{background:var(--about-card);border:1px solid var(--card-b);border-radius:18px;padding:22px;text-align:center;backdrop-filter:blur(8px)}
+
+/* ─── PILL / BADGE ───────────────────────────────────── */
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);border:1px solid rgba(124,58,237,.3);border-radius:50px;padding:8px 18px;font-size:.84rem;font-weight:600;color:#7c3aed;margin-bottom:20px}
+[data-theme="dark"] .pill{background:rgba(124,58,237,.15);color:#c4b5fd}
+
+/* ─── GRIDS ──────────────────────────────────────────── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:540px){.grid2{grid-template-columns:1fr}}
+
+/* ─── ANIMATIONS ─────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.a1{animation:fadeUp .5s ease both}
+.a2{animation:fadeUp .5s .12s ease both}
+.a3{animation:fadeUp .5s .24s ease both}
+.a4{animation:fadeUp .5s .36s ease both}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media(max-width:640px){
+  .app-nav,.pub-nav{padding:10px 3vw}
+  .nav-links a{font-size:.7rem;padding:5px 7px}
+  .page{padding:22px 4vw}
+  .card{padding:20px}
+}
+
+/* job dropdown style */
+.job-option{padding:10px 14px;cursor:pointer;font-size:.9rem;transition:background .15s;border-radius:8px}
+.job-option:hover{background:var(--tag-bg);color:#7c3aed}
+#job-dropdown{position:absolute;z-index:50;width:100%;background:var(--card);border:1.5px solid var(--inp-b);border-radius:14px;padding:8px;margin-top:4px;box-shadow:0 8px 24px rgba(124,58,237,.15);max-height:260px;overflow-y:auto;display:none}
+.job-wrap{position:relative}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  SCREEN: LANDING                                   -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="screen active" id="screen-landing">
+  <nav class="pub-nav">
+    <div class="brand">✨ SkillSync AI</div>
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()" title="Toggle dark/light mode">👁</button>
+      <button class="btn btn-o btn-sm" onclick="go('login')">Login</button>
+      <button class="btn btn-p btn-sm" onclick="go('signup')">Get Started</button>
+    </div>
+  </nav>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 6vw">
+    <div class="pill a1">⚡ AI-Powered Skill Analysis</div>
+    <h1 class="a2" style="font-size:clamp(2.2rem,6vw,4.2rem);font-weight:700;line-height:1.1;margin:0 0 18px">
+      Bridge Your <span style="color:#06b6d4">Skill Gap</span> with AI
+    </h1>
+    <p class="a3" style="font-size:clamp(.97rem,2vw,1.18rem);color:var(--hero-sub);max-width:560px;margin-bottom:34px;line-height:1.75">
+      Discover the exact skills you need for your dream job. Get a personalized roadmap and course recommendations powered by intelligent analysis.
+    </p>
+    <div class="a3" style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:64px">
+      <button class="btn btn-p" onclick="go('signup')">🚀 Analyze My Skills →</button>
+      <button class="btn btn-o" onclick="go('about')">📖 Learn More</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;width:100%;max-width:800px" class="a4">
+      <div class="card" style="text-align:center"><div style="font-size:2rem;margin-bottom:10px">🎯</div><div style="font-weight:700;margin-bottom:4px">Skill Analysis</div><div style="font-size:.84rem;color:var(--muted)">AI identifies your gaps instantly</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:2rem;margin-bottom:10px">🗺</div><div style="font-weight:700;margin-bottom:4px">Learning Roadmap</div><div style="font-size:.84rem;color:var(--muted)">Step-by-step weekly plan</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:2rem;margin-bottom:10px">📚</div><div style="font-weight:700;margin-bottom:4px">Course Suggestions</div><div style="font-size:.84rem;color:var(--muted)">Curated free & paid resources</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  SCREEN: ABOUT                                     -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="screen" id="screen-about">
+  <nav class="pub-nav">
+    <div class="brand">✨ SkillSync AI</div>
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()">👁</button>
+      <button class="btn btn-o btn-sm" onclick="go('landing')">← Back</button>
+      <button class="btn btn-p btn-sm" onclick="go('signup')">Get Started</button>
+    </div>
+  </nav>
+  <div class="about-hero">
+    <div class="pill a1">📖 About SkillSync AI</div>
+    <h1 class="a2" style="font-size:clamp(1.8rem,4vw,3rem);font-weight:700;margin-bottom:14px">What is <span style="color:#7c3aed">SkillSync AI</span>?</h1>
+    <p class="a3" style="max-width:640px;color:var(--muted);font-size:1rem;line-height:1.8;margin-bottom:48px">
+      SkillSync AI is a free career-growth platform that uses artificial intelligence to analyze the gap between your current skills and your dream job. We give you a personalized roadmap, curated courses, and an AI career assistant — all in one place.
+    </p>
+
+    <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:24px" class="a3">🚀 How to Use SkillSync AI — Step by Step</h2>
+    <div style="width:100%;max-width:720px">
+      <div class="step-card a3">
+        <div class="step-circle">1</div>
+        <div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Create Your Free Account</div>
+          <div style="color:var(--muted);font-size:.9rem;line-height:1.6">Click <strong>"Get Started"</strong> on the home page. Enter your name, email and password — or sign up instantly with Google. It's completely free, no credit card needed.</div>
+        </div>
+      </div>
+      <div class="step-card a3">
+        <div class="step-circle">2</div>
+        <div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Select Your Dream Job</div>
+          <div style="color:var(--muted);font-size:.9rem;line-height:1.6">On the <strong>Analysis page</strong>, type or select your dream job from 15 supported roles — Web Developer, Data Scientist, AI/ML Engineer, Cybersecurity Analyst, and more.</div>
+        </div>
+      </div>
+      <div class="step-card a3">
+        <div class="step-circle">3</div>
+        <div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Enter Your Current Skills</div>
+          <div style="color:var(--muted);font-size:.9rem;line-height:1.6">Type each skill you already know and click <strong>"Add"</strong> (or press Enter). Add as many as you like — e.g. Python, HTML, Excel, SQL. Also choose how many hours per week you can study.</div>
+        </div>
+      </div>
+      <div class="step-card a3">
+        <div class="step-circle">4</div>
+        <div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Get Your Skill Gap Analysis</div>
+          <div style="color:var(--muted);font-size:.9rem;line-height:1.6">Click <strong>"Analyze My Skills"</strong>. Our AI instantly shows you a <strong>match score</strong>, which skills you already have, and which ones you need to learn to land that job.</div>
+        </div>
+      </div>
+      <div class="step-card a3">
+        <div class="step-circle">5</div>
+        <div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Follow Your Learning Roadmap</div>
+          <div style="color:var(--muted);font-size:.9rem;line-height:1.6">Go to the <strong>Roadmap</strong> tab. You'll see a week-by-week plan with detailed daily steps — e.g. Week 1, Step 1: Introduction to HTML, Step 2: Setting up your editor, etc.</div>
+        </div>
+      </div>
+      <div class="step-card a3">
+        <div class="step-circle">6</div>
+        <div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Browse Courses & Start Learning</div>
+          <div style="color:var(--muted);font-size:.9rem;line-height:1.6">Visit the <strong>Courses</strong> tab for hand-picked YouTube videos, freeCodeCamp courses, and more — specific to your job role and missing skills. Click <strong>"Start Learning"</strong> to open the resource directly.</div>
+        </div>
+      </div>
+      <div class="step-card a3">
+        <div class="step-circle">7</div>
+        <div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Track Progress & Update Profile</div>
+          <div style="color:var(--muted);font-size:.9rem;line-height:1.6">Mark courses as <strong>"Skill Learned"</strong> when you finish them. Check your <strong>Progress</strong> page to see skill completion bars, and your <strong>Profile</strong> to view all your stats and goals at a glance.</div>
+        </div>
+      </div>
+      <div class="step-card a4">
+        <div class="step-circle">8</div>
+        <div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Ask the AI Career Assistant</div>
+          <div style="color:var(--muted);font-size:.9rem;line-height:1.6">Click the <strong>💬 chat button</strong> (bottom-right) anytime to ask our AI career assistant questions — "How long will it take to learn React?", "What projects should I build?", "How do I get my first job?" — it knows your profile!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feat-card"><div style="font-size:2rem;margin-bottom:10px">🎯</div><div style="font-weight:700;margin-bottom:6px">15 Job Roles</div><div style="font-size:.85rem;color:var(--muted)">Web Dev, Data Scientist, AI Engineer, Cyber Security & more</div></div>
+      <div class="feat-card"><div style="font-size:2rem;margin-bottom:10px">🤖</div><div style="font-weight:700;margin-bottom:6px">AI-Powered</div><div style="font-size:.85rem;color:var(--muted)">Intelligent analysis, roadmaps and career chat</div></div>
+      <div class="feat-card"><div style="font-size:2rem;margin-bottom:10px">📚</div><div style="font-weight:700;margin-bottom:6px">Curated Courses</div><div style="font-size:.85rem;color:var(--muted)">YouTube, freeCodeCamp, Udemy — free & paid</div></div>
+      <div class="feat-card"><div style="font-size:2rem;margin-bottom:10px">🆓</div><div style="font-weight:700;margin-bottom:6px">Completely Free</div><div style="font-size:.85rem;color:var(--muted)">No hidden fees. No credit card. Ever.</div></div>
+    </div>
+    <div style="margin:40px 0 20px">
+      <button class="btn btn-p" style="font-size:1rem;padding:13px 32px" onclick="go('signup')">🚀 Get Started for Free →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  SCREEN: LOGIN                                     -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="screen" id="screen-login" style="align-items:center;justify-content:center">
+  <div style="width:100%;max-width:440px;padding:24px 20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
+      <div class="brand">✨ SkillSync AI</div>
+      <div style="display:flex;gap:8px">
+        <button class="theme-btn" onclick="toggleTheme()">👁</button>
+        <button class="btn btn-o btn-sm" onclick="go('landing')">← Back</button>
+      </div>
+    </div>
+    <div class="card a1">
+      <h2 style="font-size:1.7rem;margin-bottom:4px">Welcome Back 👋</h2>
+      <p style="color:var(--muted);font-size:.9rem;margin-bottom:24px">Sign in to your SkillSync account</p>
+      <button class="social-btn" onclick="doLogin('google')">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="G"> Continue with Google
+      </button>
+      <div class="divider">or continue with email</div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="login-email" placeholder="you@example.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin('email')"></div>
+      <button class="btn btn-p" style="width:100%;padding:13px;font-size:1rem;justify-content:center;margin-top:4px" onclick="doLogin('email')">Sign In →</button>
+      <p style="text-align:center;margin-top:18px;font-size:.88rem;color:var(--muted)">Don't have an account? <a href="#" style="color:#7c3aed;font-weight:700;text-decoration:none" onclick="go('signup')">Sign Up</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  SCREEN: SIGNUP                                    -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="screen" id="screen-signup" style="align-items:center;justify-content:center">
+  <div style="width:100%;max-width:440px;padding:24px 20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
+      <div class="brand">✨ SkillSync AI</div>
+      <div style="display:flex;gap:8px">
+        <button class="theme-btn" onclick="toggleTheme()">👁</button>
+        <button class="btn btn-o btn-sm" onclick="go('landing')">← Back</button>
+      </div>
+    </div>
+    <div class="card a1">
+      <h2 style="font-size:1.7rem;margin-bottom:4px">Create Account ✨</h2>
+      <p style="color:var(--muted);font-size:.9rem;margin-bottom:24px">Join SkillSync AI — it's completely free!</p>
+      <button class="social-btn" onclick="doLogin('google')">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="G"> Sign up with Google
+      </button>
+      <div class="divider">or sign up with email</div>
+      <div class="form-group"><label>Full Name</label><input type="text" id="su-name" placeholder="Your full name"></div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="su-email" placeholder="you@example.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="su-pass" placeholder="Create a password" onkeydown="if(event.key==='Enter')doLogin('signup')"></div>
+      <button class="btn btn-p" style="width:100%;padding:13px;font-size:1rem;justify-content:center;margin-top:4px" onclick="doLogin('signup')">Create Account →</button>
+      <p style="text-align:center;margin-top:18px;font-size:.88rem;color:var(--muted)">Already have an account? <a href="#" style="color:#7c3aed;font-weight:700;text-decoration:none" onclick="go('login')">Sign In</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  SCREEN: APP                                       -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="screen" id="screen-app">
+  <nav class="app-nav">
+    <div class="brand">✨ SkillSync AI</div>
+    <div class="nav-links">
+      <a onclick="goTo('analyse')" id="nav-analyse">🎯 Analysis</a>
+      <a onclick="goTo('results')" id="nav-results">📊 Results</a>
+      <a onclick="goTo('roadmap')" id="nav-roadmap">🗺 Roadmap</a>
+      <a onclick="goTo('courses')" id="nav-courses">📚 Courses</a>
+      <a onclick="goTo('progress')" id="nav-progress">📝 Progress</a>
+      <a onclick="goTo('profile')" id="nav-profile">👤 Profile</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()">👁</button>
+      <span style="font-size:.8rem;color:var(--muted);font-weight:600" id="nav-uname"></span>
+      <button class="btn btn-o btn-sm" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- ── ANALYSE ── -->
+  <div class="page active" id="page-analyse">
+    <h1 class="sec-title a1">🎯 Skill <span class="hi">Analysis</span></h1>
+    <p class="sec-sub a2">Select your dream job and tell us what skills you have</p>
+    <div class="card a2" style="max-width:640px;margin:0 auto">
+      <div class="form-group">
+        <label>🚀 Your Dream Job</label>
+        <div class="job-wrap">
+          <input type="text" id="dream-job" placeholder="Type or select a job role…" oninput="filterJobs()" onfocus="showDropdown()" autocomplete="off">
+          <div id="job-dropdown"></div>
+        </div>
+        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px" id="job-quick-btns"></div>
+      </div>
+      <div class="form-group">
+        <label>💡 Skills You Already Have</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="skill-input" placeholder="Type a skill and press Enter or Add" onkeydown="if(event.key==='Enter')addSkill()">
+          <button class="btn btn-p" style="white-space:nowrap;padding:10px 16px" onclick="addSkill()">+ Add</button>
+        </div>
+        <div class="tag-area" id="skill-tags"></div>
+      </div>
+      <div class="form-group">
+        <label>⏱ Hours Available Per Week</label>
+        <select id="hours-week">
+          <option value="5">~5 hrs/week (casual)</option>
+          <option value="10" selected>~10 hrs/week (moderate)</option>
+          <option value="20">~20 hrs/week (intensive)</option>
+          <option value="40">~40 hrs/week (full-time)</option>
+        </select>
+      </div>
+      <button class="btn btn-p" style="width:100%;padding:13px;font-size:1rem;justify-content:center;margin-top:6px" onclick="analyzeSkills()">🔍 Analyze My Skills →</button>
+    </div>
+  </div>
+
+  <!-- ── RESULTS ── -->
+  <div class="page" id="page-results">
+    <h1 class="sec-title a1">Analysis for <span class="hi" id="r-job">—</span></h1>
+    <p style="color:var(--muted);margin-bottom:24px">Here's how your skills stack up against the requirements.</p>
+    <div id="r-loading" class="loading"><div class="spinner"></div><br>Analysing your skills with AI…</div>
+    <div id="r-content" style="display:none">
+      <div class="card a1" style="text-align:center;max-width:360px;margin:0 auto 20px">
+        <div class="circle-wrap">
+          <svg class="circle-svg" viewBox="0 0 120 120">
+            <defs><linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#3b82f6"/></linearGradient></defs>
+            <circle class="c-track" cx="60" cy="60" r="54"/>
+            <circle class="c-fill" id="score-circle" cx="60" cy="60" r="54" transform="rotate(-90 60 60)"/>
+            <text class="c-txt" x="60" y="66" text-anchor="middle" id="score-text">0%</text>
+          </svg>
+          <div class="c-lbl">Skill Gap Score</div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card a2"><div style="font-size:1rem;font-weight:700;margin-bottom:12px;color:#10b981">✅ Skills You Have</div><div id="r-have"></div></div>
+        <div class="card a2"><div style="font-size:1rem;font-weight:700;margin-bottom:12px;color:#ef4444">❌ Skills to Learn</div><div id="r-need"></div></div>
+      </div>
+      <div class="mt" style="display:flex;gap:14px;flex-wrap:wrap">
+        <button class="btn btn-p" style="flex:1;padding:13px;justify-content:center" onclick="goTo('roadmap')">🗺 View Learning Roadmap →</button>
+        <button class="btn btn-o" style="flex:1;padding:13px;justify-content:center" onclick="goTo('courses')">📚 Browse Courses →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ROADMAP ── -->
+  <div class="page" id="page-roadmap">
+    <h1 class="sec-title a1">🗺 Learning <span class="hi">Roadmap</span></h1>
+    <p class="sec-sub a2">Your personalized step-by-step weekly plan</p>
+    <div id="rm-loading" class="loading"><div class="spinner"></div><br>Generating your roadmap…</div>
+    <div id="rm-content"></div>
+  </div>
+
+  <!-- ── COURSES ── -->
+  <div class="page" id="page-courses">
+    <h1 class="sec-title a1">📚 Course <span class="hi">Recommendations</span></h1>
+    <p class="sec-sub a2">Curated resources tailored to your dream job</p>
+    <div id="c-loading" class="loading"><div class="spinner"></div><br>Loading courses…</div>
+    <div id="c-content" style="display:none">
+      <div class="skill-filter" id="skill-filter"></div>
+      <div id="c-list"></div>
+    </div>
+  </div>
+
+  <!-- ── PROGRESS ── -->
+  <div class="page" id="page-progress">
+    <h1 class="sec-title a1">📝 My <span class="hi">Progress</span></h1>
+    <p class="sec-sub a2">Track your learning journey</p>
+    <div class="card a2"><div style="font-weight:700;font-size:1rem;margin-bottom:16px">Overall Progress</div><div id="pg-overall"></div></div>
+    <div class="card mt a3"><div style="font-weight:700;font-size:1rem;margin-bottom:16px">Skills Progress</div><div id="pg-skills"></div></div>
+    <div class="card mt a3"><div style="font-weight:700;font-size:1rem;margin-bottom:16px">🏆 Completed Courses</div><div id="pg-done"></div></div>
+  </div>
+
+  <!-- ── PROFILE ── -->
+  <div class="page" id="page-profile">
+    <h1 class="sec-title a1">👤 <span class="hi">Profile</span></h1>
+    <div class="card a2" style="max-width:700px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap">
+        <div class="avatar" id="pf-av">S</div>
+        <div><div style="font-weight:700;font-size:1.2rem" id="pf-name">—</div><div style="color:var(--muted);font-size:.9rem" id="pf-email">—</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;font-size:.91rem">
+        <div>👤 <strong>Name:</strong> <span id="pf-n2">—</span></div>
+        <div>✉️ <strong>Email:</strong> <span id="pf-e2">—</span></div>
+        <div>🎯 <strong>Dream Job:</strong> <span id="pf-job">Not set</span></div>
+        <div>⏱ <strong>Hours/Week:</strong> <span id="pf-hrs">—</span></div>
+      </div>
+      <div class="stat-grid" id="pf-stats"></div>
+    </div>
+    <div class="card mt a3" style="max-width:700px"><div style="font-size:1rem;font-weight:700;margin-bottom:14px">✨ Skills Learned</div><div id="pf-have"></div></div>
+    <div class="card mt a3" style="max-width:700px"><div style="font-size:1rem;font-weight:700;margin-bottom:14px">🎯 Learning Goals</div><div id="pf-goals"></div></div>
+  </div>
+</div><!-- /screen-app -->
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  JAVASCRIPT                                        -->
+<!-- ══════════════════════════════════════════════════ -->
+<script>
+// ── STATE ──────────────────────────────────────────
+const S={
+  user:null, dreamJob:'', skills:[], hoursPerWeek:10,
+  matchScore:0, skillsHave:[], skillsNeed:[],
+  roadmap:[], completedCourses:new Set(), completedWeeks:new Set(),
+  resultsReady:false, roadmapReady:false,
+  activeSkillFilter:'All'
+};
+
+// ── JOB DATABASE ───────────────────────────────────
+const JOBS={
+  "Web Developer":["HTML","CSS","JavaScript","React","Node.js","Git"],
+  "Full Stack Developer":["HTML","CSS","JavaScript","React","Node.js","MongoDB"],
+  "Data Analyst":["Excel","SQL","Python","Power BI","Tableau","Statistics"],
+  "Data Scientist":["Python","Machine Learning","Statistics","Pandas","NumPy","Data Visualization"],
+  "Android Developer":["Java","Kotlin","Android Studio","XML","APIs","Firebase"],
+  "UI/UX Designer":["Figma","Adobe XD","UX Principles","Wireframing","Prototyping","User Research"],
+  "Cyber Security Analyst":["Networking","Ethical Hacking","Cryptography","Penetration Testing","Security Tools","Linux"],
+  "Cloud Engineer":["AWS","Azure","Docker","Kubernetes","Linux","Networking"],
+  "AI/ML Engineer":["Python","Machine Learning","Deep Learning","TensorFlow","Data Preprocessing","Statistics"],
+  "Database Administrator":["SQL","Database Design","MySQL","PostgreSQL","Backup & Recovery","Performance Tuning"],
+  "Game Developer":["C++","C#","Unity","Unreal Engine","Game Design","Physics Engines"],
+  "Software Engineer":["Java","Python","C++","Data Structures","Algorithms","OOP"],
+  "DevOps Engineer":["CI/CD","Docker","Kubernetes","Jenkins","Linux","Git"],
+  "Business Analyst":["Excel","SQL","Data Analysis","Communication","Requirement Gathering","Documentation"],
+  "Network Engineer":["Networking","Routing","Switching","Cisco","Firewalls","Troubleshooting"]
+};
+const JOB_LIST=Object.keys(JOBS);
+
+// ── COURSES DATABASE ──────────────────────────────
+const COURSE_DB={
+  "Web Developer":[
+    {skill:"HTML",name:"HTML & CSS Full Course for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=html+css+full+course+beginners+freecodecamp",duration:"6 hrs"},
+    {skill:"HTML",name:"Responsive Web Design Certification",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/2022/responsive-web-design/",duration:"15 hrs"},
+    {skill:"CSS",name:"CSS Tutorial – Zero to Hero",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=css+tutorial+zero+to+hero",duration:"5 hrs"},
+    {skill:"JavaScript",name:"JavaScript Algorithms and Data Structures",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/",duration:"20 hrs"},
+    {skill:"JavaScript",name:"JavaScript Full Course for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=javascript+full+course+beginners",duration:"8 hrs"},
+    {skill:"React",name:"Front End Development Libraries",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/front-end-development-libraries/",duration:"18 hrs"},
+    {skill:"React",name:"React JS Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=react+js+full+course+2024",duration:"10 hrs"},
+    {skill:"Node.js",name:"Back End Development and APIs",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/back-end-development-and-apis/",duration:"15 hrs"},
+    {skill:"Node.js",name:"Node.js & Express Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=nodejs+express+full+course",duration:"8 hrs"},
+    {skill:"Git",name:"Git and GitHub for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=git+github+tutorial+beginners+freecodecamp",duration:"3 hrs"},
+  ],
+  "Full Stack Developer":[
+    {skill:"HTML",name:"Responsive Web Design",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/2022/responsive-web-design/",duration:"15 hrs"},
+    {skill:"CSS",name:"CSS Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=css+full+course+2024",duration:"5 hrs"},
+    {skill:"JavaScript",name:"JavaScript Algorithms & Data Structures",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/",duration:"20 hrs"},
+    {skill:"React",name:"React Complete Guide",platform:"Udemy",type:"paid",url:"https://www.udemy.com/courses/search/?q=react+complete+guide",duration:"40 hrs"},
+    {skill:"React",name:"React Full Course 2024",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=react+full+course+2024",duration:"12 hrs"},
+    {skill:"Node.js",name:"Node.js REST API Tutorial",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=nodejs+rest+api+tutorial",duration:"6 hrs"},
+    {skill:"MongoDB",name:"MongoDB Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=mongodb+full+course+beginners",duration:"5 hrs"},
+    {skill:"MongoDB",name:"MongoDB & Mongoose Tutorial",platform:"freeCodeCamp",type:"free",url:"https://www.youtube.com/results?search_query=mongodb+mongoose+freecodecamp",duration:"3 hrs"},
+    {skill:"Git",name:"Git & GitHub Crash Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=git+github+crash+course",duration:"2 hrs"},
+  ],
+  "Data Analyst":[
+    {skill:"Excel",name:"Microsoft Excel – Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=microsoft+excel+full+course+beginners",duration:"6 hrs"},
+    {skill:"SQL",name:"SQL Tutorial – Full Database Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=sql+full+course+freecodecamp",duration:"4 hrs"},
+    {skill:"SQL",name:"Relational Database Certification",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/relational-database/",duration:"20 hrs"},
+    {skill:"Python",name:"Scientific Computing with Python",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/scientific-computing-with-python/",duration:"15 hrs"},
+    {skill:"Python",name:"Python for Data Analysis Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=python+data+analysis+full+course",duration:"8 hrs"},
+    {skill:"Power BI",name:"Power BI Full Course – Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=power+bi+full+course+beginners",duration:"5 hrs"},
+    {skill:"Tableau",name:"Tableau for Beginners Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=tableau+full+course+beginners",duration:"4 hrs"},
+    {skill:"Statistics",name:"Statistics for Data Science",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=statistics+for+data+science+full+course",duration:"6 hrs"},
+    {skill:"Statistics",name:"Data Analysis with Python Certification",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/data-analysis-with-python/",duration:"10 hrs"},
+  ],
+  "Data Scientist":[
+    {skill:"Python",name:"Scientific Computing with Python",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/scientific-computing-with-python/",duration:"15 hrs"},
+    {skill:"Python",name:"Python Full Course for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=python+full+course+for+beginners",duration:"12 hrs"},
+    {skill:"Machine Learning",name:"Machine Learning with Python Certification",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/machine-learning-with-python/",duration:"15 hrs"},
+    {skill:"Machine Learning",name:"Machine Learning Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=machine+learning+full+course+2024",duration:"10 hrs"},
+    {skill:"Statistics",name:"Statistics for Data Science",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=statistics+data+science+full+course",duration:"6 hrs"},
+    {skill:"Pandas",name:"Pandas Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=pandas+full+course+python",duration:"4 hrs"},
+    {skill:"NumPy",name:"NumPy Tutorial for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=numpy+tutorial+beginners",duration:"2 hrs"},
+    {skill:"Data Visualization",name:"Data Visualization with Python",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/data-analysis-with-python/",duration:"8 hrs"},
+    {skill:"Data Visualization",name:"Matplotlib & Seaborn Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=matplotlib+seaborn+python+full+course",duration:"5 hrs"},
+  ],
+  "Android Developer":[
+    {skill:"Java",name:"Java Full Course for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=java+full+course+beginners",duration:"12 hrs"},
+    {skill:"Kotlin",name:"Kotlin Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=kotlin+full+course+beginners",duration:"8 hrs"},
+    {skill:"Android Studio",name:"Android Development Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=android+development+full+course+2024",duration:"14 hrs"},
+    {skill:"Android Studio",name:"Android Development for Beginners",platform:"Udemy",type:"paid",url:"https://www.udemy.com/courses/search/?q=android+development+beginners",duration:"25 hrs"},
+    {skill:"XML",name:"XML for Android Layouts",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=xml+android+layouts+tutorial",duration:"2 hrs"},
+    {skill:"APIs",name:"REST APIs in Android",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=rest+api+android+kotlin+tutorial",duration:"3 hrs"},
+    {skill:"Firebase",name:"Firebase for Android Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=firebase+android+full+course",duration:"5 hrs"},
+  ],
+  "UI/UX Designer":[
+    {skill:"Figma",name:"Figma Full Course for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=figma+full+course+beginners",duration:"6 hrs"},
+    {skill:"Figma",name:"UI Design with Figma",platform:"Udemy",type:"paid",url:"https://www.udemy.com/courses/search/?q=figma+ui+design",duration:"15 hrs"},
+    {skill:"Adobe XD",name:"Adobe XD Tutorial – Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=adobe+xd+full+course",duration:"4 hrs"},
+    {skill:"UX Principles",name:"UX Design Fundamentals",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=ux+design+fundamentals+course",duration:"5 hrs"},
+    {skill:"Wireframing",name:"Wireframing for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=wireframing+tutorial+beginners",duration:"2 hrs"},
+    {skill:"Prototyping",name:"Prototyping in Figma",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=figma+prototyping+tutorial",duration:"2 hrs"},
+    {skill:"User Research",name:"User Research Methods",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=ux+user+research+methods+tutorial",duration:"3 hrs"},
+  ],
+  "Cyber Security Analyst":[
+    {skill:"Networking",name:"Computer Networking Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=computer+networking+full+course",duration:"8 hrs"},
+    {skill:"Ethical Hacking",name:"Ethical Hacking Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=ethical+hacking+full+course+freecodecamp",duration:"15 hrs"},
+    {skill:"Cryptography",name:"Cryptography Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=cryptography+full+course",duration:"5 hrs"},
+    {skill:"Penetration Testing",name:"Penetration Testing Tutorial",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=penetration+testing+tutorial+beginners",duration:"6 hrs"},
+    {skill:"Security Tools",name:"Information Security Certification",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/information-security/",duration:"10 hrs"},
+    {skill:"Linux",name:"Linux Full Course for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=linux+full+course+beginners",duration:"7 hrs"},
+  ],
+  "Cloud Engineer":[
+    {skill:"AWS",name:"AWS Full Course – Beginner to Pro",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=aws+full+course+2024",duration:"10 hrs"},
+    {skill:"AWS",name:"AWS Cloud Practitioner",platform:"Udemy",type:"paid",url:"https://www.udemy.com/courses/search/?q=aws+cloud+practitioner",duration:"20 hrs"},
+    {skill:"Azure",name:"Microsoft Azure Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=microsoft+azure+full+course",duration:"8 hrs"},
+    {skill:"Docker",name:"Docker Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=docker+full+course+beginners",duration:"5 hrs"},
+    {skill:"Kubernetes",name:"Kubernetes Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=kubernetes+full+course+beginners",duration:"6 hrs"},
+    {skill:"Linux",name:"Linux Command Line Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=linux+command+line+full+course",duration:"5 hrs"},
+    {skill:"Networking",name:"Networking Fundamentals",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=networking+fundamentals+full+course",duration:"6 hrs"},
+  ],
+  "AI/ML Engineer":[
+    {skill:"Python",name:"Scientific Computing with Python",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/scientific-computing-with-python/",duration:"15 hrs"},
+    {skill:"Machine Learning",name:"Machine Learning with Python",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/machine-learning-with-python/",duration:"15 hrs"},
+    {skill:"Machine Learning",name:"Machine Learning Crash Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=machine+learning+crash+course+2024",duration:"8 hrs"},
+    {skill:"Deep Learning",name:"Deep Learning Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=deep+learning+full+course+2024",duration:"10 hrs"},
+    {skill:"TensorFlow",name:"TensorFlow Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=tensorflow+full+course+beginners",duration:"6 hrs"},
+    {skill:"Data Preprocessing",name:"Data Preprocessing with Python",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=data+preprocessing+python+tutorial",duration:"3 hrs"},
+    {skill:"Statistics",name:"Statistics for ML",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=statistics+for+machine+learning",duration:"5 hrs"},
+  ],
+  "Database Administrator":[
+    {skill:"SQL",name:"SQL Full Course – Relational Databases",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/relational-database/",duration:"20 hrs"},
+    {skill:"SQL",name:"SQL Tutorial Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=sql+tutorial+full+course",duration:"5 hrs"},
+    {skill:"Database Design",name:"Database Design Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=database+design+full+course",duration:"8 hrs"},
+    {skill:"MySQL",name:"MySQL Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=mysql+full+course+beginners",duration:"5 hrs"},
+    {skill:"PostgreSQL",name:"PostgreSQL Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=postgresql+full+course+beginners",duration:"4 hrs"},
+    {skill:"Backup & Recovery",name:"Database Backup & Recovery",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=database+backup+recovery+tutorial",duration:"2 hrs"},
+    {skill:"Performance Tuning",name:"Database Performance Tuning",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=database+performance+tuning+tutorial",duration:"3 hrs"},
+  ],
+  "Game Developer":[
+    {skill:"C#",name:"C# Full Course for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=c+sharp+full+course+beginners",duration:"8 hrs"},
+    {skill:"C++",name:"C++ Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=c+plus+plus+full+course+beginners",duration:"10 hrs"},
+    {skill:"Unity",name:"Unity Full Course for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=unity+full+course+beginners+2024",duration:"12 hrs"},
+    {skill:"Unity",name:"Complete C# Unity Developer",platform:"Udemy",type:"paid",url:"https://www.udemy.com/courses/search/?q=unity+c+sharp+game+development",duration:"30 hrs"},
+    {skill:"Unreal Engine",name:"Unreal Engine Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=unreal+engine+full+course+beginners",duration:"10 hrs"},
+    {skill:"Game Design",name:"Game Design Fundamentals",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=game+design+fundamentals+course",duration:"4 hrs"},
+    {skill:"Physics Engines",name:"Game Physics Tutorial",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=game+physics+tutorial+unity",duration:"3 hrs"},
+  ],
+  "Software Engineer":[
+    {skill:"Java",name:"Java Full Course for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=java+full+course+beginners",duration:"12 hrs"},
+    {skill:"Python",name:"Scientific Computing with Python",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/scientific-computing-with-python/",duration:"15 hrs"},
+    {skill:"C++",name:"C++ Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=c+plus+plus+full+course",duration:"10 hrs"},
+    {skill:"Data Structures",name:"Data Structures Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=data+structures+full+course",duration:"8 hrs"},
+    {skill:"Algorithms",name:"Algorithms and Data Structures",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/",duration:"20 hrs"},
+    {skill:"Algorithms",name:"Algorithms Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=algorithms+full+course+beginners",duration:"6 hrs"},
+    {skill:"OOP",name:"Object Oriented Programming",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=object+oriented+programming+full+course",duration:"5 hrs"},
+  ],
+  "DevOps Engineer":[
+    {skill:"CI/CD",name:"CI/CD Pipeline Tutorial",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=cicd+pipeline+tutorial+beginners",duration:"4 hrs"},
+    {skill:"Docker",name:"Docker Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=docker+full+course+2024",duration:"5 hrs"},
+    {skill:"Kubernetes",name:"Kubernetes Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=kubernetes+full+course+2024",duration:"6 hrs"},
+    {skill:"Jenkins",name:"Jenkins Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=jenkins+full+course+beginners",duration:"4 hrs"},
+    {skill:"Linux",name:"Linux for DevOps Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=linux+for+devops+full+course",duration:"6 hrs"},
+    {skill:"Git",name:"Git & GitHub Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=git+github+full+course",duration:"3 hrs"},
+    {skill:"Git",name:"Quality Assurance Certification",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/quality-assurance/",duration:"10 hrs"},
+  ],
+  "Business Analyst":[
+    {skill:"Excel",name:"Excel Full Course for Beginners",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=excel+full+course+beginners",duration:"6 hrs"},
+    {skill:"SQL",name:"SQL for Business Analysts",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=sql+for+business+analysts+tutorial",duration:"4 hrs"},
+    {skill:"SQL",name:"Relational Database Certification",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/relational-database/",duration:"20 hrs"},
+    {skill:"Data Analysis",name:"Data Analysis with Python",platform:"freeCodeCamp",type:"free",url:"https://www.freecodecamp.org/learn/data-analysis-with-python/",duration:"10 hrs"},
+    {skill:"Communication",name:"Business Communication Skills",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=business+communication+skills+course",duration:"3 hrs"},
+    {skill:"Requirement Gathering",name:"Requirements Gathering Tutorial",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=requirements+gathering+business+analyst+tutorial",duration:"2 hrs"},
+    {skill:"Documentation",name:"Business Analysis Documentation",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=business+analyst+documentation+tutorial",duration:"2 hrs"},
+  ],
+  "Network Engineer":[
+    {skill:"Networking",name:"Computer Networking Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=computer+networking+full+course+beginners",duration:"8 hrs"},
+    {skill:"Routing",name:"Routing Protocols Tutorial",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=routing+protocols+tutorial+ccna",duration:"4 hrs"},
+    {skill:"Switching",name:"Switching Concepts Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=switching+concepts+networking+tutorial",duration:"3 hrs"},
+    {skill:"Cisco",name:"Cisco CCNA Full Course",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=cisco+ccna+full+course+2024",duration:"20 hrs"},
+    {skill:"Cisco",name:"Cisco CCNA Complete Course",platform:"Udemy",type:"paid",url:"https://www.udemy.com/courses/search/?q=cisco+ccna",duration:"40 hrs"},
+    {skill:"Firewalls",name:"Firewall Security Tutorial",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=firewall+security+tutorial+beginners",duration:"3 hrs"},
+    {skill:"Troubleshooting",name:"Network Troubleshooting Guide",platform:"YouTube",type:"free",url:"https://www.youtube.com/results?search_query=network+troubleshooting+guide",duration:"2 hrs"},
+  ]
+};
+
+// ── THEME ──────────────────────────────────────────
+function toggleTheme(){
+  const t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  document.querySelectorAll('.theme-btn').forEach(b=>b.textContent=t==='dark'?'☀️':'👁');
+}
+
+// ── SCREEN ROUTING ─────────────────────────────────
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='app') initApp();
+}
+
+// ── AUTH ───────────────────────────────────────────
+function doLogin(m){
+  let name='Student',email='user@example.com';
+  if(m==='signup'){
+    name=document.getElementById('su-name').value.trim()||'Student';
+    email=document.getElementById('su-email').value.trim()||'user@example.com';
+  } else if(m==='email'){
+    email=document.getElementById('login-email').value.trim()||'user@example.com';
+    name=email.split('@')[0];name=name.charAt(0).toUpperCase()+name.slice(1);
+  } else { name='Student'; email='student@gmail.com'; }
+  S.user={name,email};
+  document.getElementById('nav-uname').textContent=name;
+  go('app'); goTo('analyse');
+}
+function logout(){
+  Object.assign(S,{user:null,dreamJob:'',skills:[],skillsHave:[],skillsNeed:[],matchScore:0,roadmap:[],completedCourses:new Set(),completedWeeks:new Set(),resultsReady:false,roadmapReady:false,activeSkillFilter:'All'});
+  go('landing');
+}
+
+// ── APP INIT ──────────────────────────────────────
+function initApp(){
+  // build quick job buttons
+  const qb=document.getElementById('job-quick-btns');
+  if(!qb.children.length){
+    JOB_LIST.forEach(j=>{
+      const b=document.createElement('button');
+      b.className='sf-btn';b.textContent=j;
+      b.onclick=()=>{document.getElementById('dream-job').value=j;hideDropdown()};
+      qb.appendChild(b);
+    });
+  }
+}
+
+// ── JOB DROPDOWN ──────────────────────────────────
+function filterJobs(){
+  const q=document.getElementById('dream-job').value.toLowerCase();
+  const dd=document.getElementById('job-dropdown');
+  const matches=JOB_LIST.filter(j=>j.toLowerCase().includes(q));
+  if(!q||!matches.length){dd.style.display='none';return;}
+  dd.innerHTML=matches.map(j=>`<div class="job-option" onclick="selectJob('${j}')">${j}</div>`).join('');
+  dd.style.display='block';
+}
+function showDropdown(){filterJobs();}
+function hideDropdown(){document.getElementById('job-dropdown').style.display='none';}
+function selectJob(j){document.getElementById('dream-job').value=j;hideDropdown();}
+document.addEventListener('click',e=>{if(!e.target.closest('.job-wrap'))hideDropdown();});
+
+// ── SKILL TAGS ────────────────────────────────────
+function addSkill(){
+  const inp=document.getElementById('skill-input');
+  const v=inp.value.trim();
+  if(!v||S.skills.includes(v)){inp.value='';return;}
+  S.skills.push(v);renderTags();inp.value='';
+}
+function removeSkillAt(i){S.skills.splice(i,1);renderTags();}
+function renderTags(){
+  document.getElementById('skill-tags').innerHTML=S.skills.map((s,i)=>
+    `<div class="tag">${s} <span class="rm" onclick="removeSkillAt(${i})">×</span></div>`
+  ).join('');
+}
+
+// ── IN-APP NAV ────────────────────────────────────
+function goTo(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  const na=document.getElementById('nav-'+page);if(na)na.classList.add('active');
+  window.scrollTo(0,0);
+  if(page==='results')renderResults();
+  if(page==='roadmap')renderRoadmap();
+  if(page==='courses')renderCourses();
+  if(page==='progress')renderProgress();
+  if(page==='profile')renderProfile();
+}
+
+// ── ANALYZE ──────────────────────────────────────
+function analyzeSkills(){
+  const job=document.getElementById('dream-job').value.trim();
+  if(!job){alert('Please enter or select your dream job!');return;}
+  if(!S.skills.length){alert('Please add at least one skill!');return;}
+  S.dreamJob=job;
+  S.hoursPerWeek=parseInt(document.getElementById('hours-week').value);
+  S.resultsReady=false;S.roadmapReady=false;
+  S.roadmap=[];
+  goTo('results');
+}
+
+// ── RESULTS ──────────────────────────────────────
+async function renderResults(){
+  document.getElementById('r-job').textContent=S.dreamJob;
+  if(S.resultsReady){showResults();return;}
+  document.getElementById('r-loading').style.display='block';
+  document.getElementById('r-content').style.display='none';
+  // required skills from DB
+  const jobKey=JOB_LIST.find(j=>j.toLowerCase()===S.dreamJob.toLowerCase())||S.dreamJob;
+  const requiredSkills=JOBS[jobKey]||[];
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:800,
+        messages:[{role:'user',content:
+          `Career skills gap analysis. Dream job: "${S.dreamJob}". Required skills for this role: [${requiredSkills.join(', ')}]. User has: [${S.skills.join(', ')}].
+Compare the user's skills against required skills. Be generous — partial matches count.
+Respond ONLY with valid JSON (no markdown):
+{"matchScore":<0-100>,"skillsHave":[<from user's list that match required>],"skillsNeed":[<required skills user is missing>]}`
+        }]
+      })
+    });
+    const d=await res.json();
+    const p=JSON.parse(d.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim());
+    S.matchScore=p.matchScore||0;S.skillsHave=p.skillsHave||[];S.skillsNeed=p.skillsNeed||[];
+  } catch {
+    const have=S.skills.filter(s=>requiredSkills.some(r=>r.toLowerCase().includes(s.toLowerCase())||s.toLowerCase().includes(r.toLowerCase())));
+    const need=requiredSkills.filter(r=>!S.skills.some(s=>s.toLowerCase().includes(r.toLowerCase())||r.toLowerCase().includes(s.toLowerCase())));
+    S.skillsHave=have.length?have:S.skills.slice(0,Math.ceil(S.skills.length/2));
+    S.skillsNeed=need.length?need:requiredSkills.slice(0,4);
+    S.matchScore=Math.round((S.skillsHave.length/requiredSkills.length)*100)||0;
+  }
+  S.resultsReady=true;showResults();
+}
+function showResults(){
+  document.getElementById('r-loading').style.display='none';
+  document.getElementById('r-content').style.display='block';
+  const off=339-(339*S.matchScore/100);
+  setTimeout(()=>{document.getElementById('score-circle').style.strokeDashoffset=off;document.getElementById('score-text').textContent=S.matchScore+'%';},120);
+  document.getElementById('r-have').innerHTML=S.skillsHave.length
+    ?S.skillsHave.map(s=>`<div class="skill-item"><span style="color:#10b981;font-size:1.1rem">✓</span>${s}</div>`).join('')
+    :'<div style="color:var(--muted);font-size:.88rem">No matching skills found yet.</div>';
+  document.getElementById('r-need').innerHTML=S.skillsNeed.map(s=>`<div class="skill-item"><span style="color:#ef4444;font-size:1.1rem">✕</span>${s}</div>`).join('');
+}
+
+// ── ROADMAP ──────────────────────────────────────
+async function renderRoadmap(){
+  if(S.roadmapReady){showRoadmap();return;}
+  if(!S.dreamJob){document.getElementById('rm-loading').style.display='none';document.getElementById('rm-content').innerHTML='<div class="card" style="color:var(--muted)">Please complete an analysis first.</div>';return;}
+  document.getElementById('rm-loading').style.display='block';
+  document.getElementById('rm-content').innerHTML='';
+  const weeks=S.hoursPerWeek<=5?10:S.hoursPerWeek<=10?8:S.hoursPerWeek<=20?6:4;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:3000,
+        messages:[{role:'user',content:
+          `Create a ${weeks}-week learning roadmap for "${S.dreamJob}". Skills to learn: ${S.skillsNeed.join(', ')}. Available: ${S.hoursPerWeek} hrs/week.
+Each week must have exactly 5 steps, each step being a specific actionable task.
+Respond ONLY with valid JSON array (no markdown, no extra text):
+[{"week":1,"title":"Week title","hours":${S.hoursPerWeek},"steps":["Step 1: Introduction – what is X and why it matters","Step 2: Setup – install tools and configure environment","Step 3: Core concepts – learn the fundamentals","Step 4: Practice – build a small exercise","Step 5: Project – apply what you learned"]}]
+Exactly ${weeks} week objects. Each step starts with "Step N: Title – description".`
+        }]
+      })
+    });
+    const d=await res.json();
+    S.roadmap=JSON.parse(d.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim());
+  } catch {
+    S.roadmap=S.skillsNeed.slice(0,weeks).map((sk,i)=>({
+      week:i+1,title:`Learn ${sk}`,hours:S.hoursPerWeek,
+      steps:[
+        `Step 1: Introduction – What is ${sk} and why it matters for ${S.dreamJob}`,
+        `Step 2: Setup – Install and configure tools needed for ${sk}`,
+        `Step 3: Core Concepts – Learn the fundamental principles of ${sk}`,
+        `Step 4: Hands-on Practice – Complete beginner exercises in ${sk}`,
+        `Step 5: Mini Project – Build a small project using ${sk}`
+      ]
+    }));
+    // fill remaining weeks if needed
+    while(S.roadmap.length<weeks){
+      const w=S.roadmap.length+1;
+      S.roadmap.push({week:w,title:'Review & Build Portfolio',hours:S.hoursPerWeek,steps:[
+        'Step 1: Review – Revisit all skills learned so far','Step 2: Consolidate – Fix gaps in your understanding',
+        'Step 3: Project Planning – Design a portfolio project','Step 4: Development – Build the project',
+        'Step 5: Deploy & Share – Publish your project online'
+      ]});
+    }
+  }
+  S.roadmapReady=true;document.getElementById('rm-loading').style.display='none';showRoadmap();
+}
+function showRoadmap(){
+  document.getElementById('rm-content').innerHTML=S.roadmap.map(w=>{
+    const done=S.completedWeeks.has(w.week);
+    return `
+    <div class="week-card" id="wcard-${w.week}" style="${done?'border-left-color:#10b981;opacity:.85':''}">
+      <div class="week-hdr">
+        <div class="week-num" style="${done?'background:linear-gradient(135deg,#10b981,#06b6d4)':''}">W${w.week}</div>
+        <div>
+          <div class="week-title">${done?'✅ ':''}${w.title}</div>
+          <div class="week-hrs">⏱ ${w.hours} hours this week</div>
+        </div>
+      </div>
+      <ul class="steps-list">
+        ${(w.steps||[]).map(s=>`<li><span class="step-num">${s.split(':')[0]}:</span>${s.split(':').slice(1).join(':')}</li>`).join('')}
+      </ul>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap">
+        <button onclick="goTo('courses')" style="background:var(--social-bg);border:1.5px solid var(--inp-b);color:#7c3aed;padding:9px 18px;font-size:.82rem;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:600;display:inline-flex;align-items:center;gap:6px">
+          📚 View Course Suggestion
+        </button>
+        <button onclick="toggleWeekDone(${w.week})" style="background:${done?'#10b981':'var(--social-bg)'};border:1.5px solid ${done?'#10b981':'var(--inp-b)'};color:${done?'#fff':'#7c3aed'};padding:9px 18px;font-size:.82rem;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:600;display:inline-flex;align-items:center;gap:6px">
+          ${done?'✅ Completed':'✓ Mark as Completed'}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function toggleWeekDone(week){
+  S.completedWeeks.has(week)?S.completedWeeks.delete(week):S.completedWeeks.add(week);
+  showRoadmap();
+}
+
+// ── COURSES ──────────────────────────────────────
+function renderCourses(){
+  document.getElementById('c-loading').style.display='none';
+  document.getElementById('c-content').style.display='block';
+  // find job in DB
+  const jobKey=JOB_LIST.find(j=>j.toLowerCase()===S.dreamJob.toLowerCase())||null;
+  const courses=jobKey&&COURSE_DB[jobKey]?COURSE_DB[jobKey]:[];
+  if(!S.dreamJob||!courses.length){
+    document.getElementById('c-list').innerHTML='<div class="card" style="color:var(--muted)">Please complete an analysis first to see course recommendations.</div>';
+    document.getElementById('skill-filter').innerHTML='';return;
+  }
+  // build filter
+  const skills=['All',...new Set(courses.map(c=>c.skill))];
+  document.getElementById('skill-filter').innerHTML=skills.map(s=>
+    `<button class="sf-btn${s===S.activeSkillFilter?' active':''}" onclick="setFilter('${s}')">${s}</button>`
+  ).join('');
+  showCourseList(courses);
+}
+function setFilter(f){S.activeSkillFilter=f;renderCourses();}
+function showCourseList(courses){
+  const filtered=S.activeSkillFilter==='All'?courses:courses.filter(c=>c.skill===S.activeSkillFilter);
+  const icons={YouTube:'▶️',freeCodeCamp:'🏕',Udemy:'📘',Coursera:'🎓'};
+  document.getElementById('c-list').innerHTML=filtered.map((c,i)=>{
+    const done=S.completedCourses.has(c.name);
+    return `<div class="course-card">
+      <div class="c-icon">${icons[c.platform]||'📖'}</div>
+      <div class="c-info">
+        <div class="c-name">${c.name}</div>
+        <div class="c-meta">
+          <span class="badge ${c.type==='free'?'b-free':'b-paid'}">${c.type==='free'?'FREE':'PAID'}</span>
+          <span class="badge b-yt">${c.platform}</span>
+          <span style="font-size:.76rem;color:var(--muted)">• ${c.skill} • ${c.duration}</span>
+        </div>
+        <div class="c-actions">
+          <a href="${c.url}" target="_blank" rel="noopener" style="text-decoration:none"><button class="btn btn-p btn-sm">Start Learning ↗</button></a>
+          <button class="${done?'btn-g':''}" style="${done?'':'background:var(--social-bg);border:1.5px solid var(--inp-b);color:#7c3aed;padding:7px 14px;font-size:.78rem;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600'}" onclick="toggleDone('${c.name}')">
+            ${done?'Skill Learned! ✅':'Mark as Completed ✅'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function toggleDone(name){
+  S.completedCourses.has(name)?S.completedCourses.delete(name):S.completedCourses.add(name);
+  renderCourses();
+}
+
+// ── PROGRESS ─────────────────────────────────────
+function renderProgress(){
+  const jobKey=JOB_LIST.find(j=>j.toLowerCase()===S.dreamJob.toLowerCase());
+  const allCourses=jobKey&&COURSE_DB[jobKey]?COURSE_DB[jobKey]:[];
+  const total=(S.skillsHave.length+S.skillsNeed.length)||1;
+  const ovPct=Math.round((S.skillsHave.length/total)*100);
+  const coPct=allCourses.length?Math.round((S.completedCourses.size/allCourses.length)*100):0;
+  document.getElementById('pg-overall').innerHTML=[
+    {l:'Skills Acquired',p:ovPct,v:`${S.skillsHave.length}/${total}`},
+    {l:'Courses Completed',p:coPct,v:`${S.completedCourses.size}/${allCourses.length}`},
+    {l:'Skill Match Score',p:S.matchScore,v:`${S.matchScore}%`}
+  ].map(x=>`<div class="prog-item"><div class="prog-lbl"><span>${x.l}</span><span>${x.v}</span></div><div class="prog-wrap"><div class="prog-bar" style="width:${x.p}%"></div></div></div>`).join('');
+  const allS=[...S.skillsHave.map(s=>({s,p:100})),...S.skillsNeed.map(s=>({s,p:0}))];
+  document.getElementById('pg-skills').innerHTML=allS.length
+    ?allS.map(({s,p})=>`<div class="prog-item"><div class="prog-lbl"><span>${s}</span><span style="color:${p===100?'#10b981':'var(--muted)'}">${p===100?'✓ Have':'To Learn'}</span></div><div class="prog-wrap"><div class="prog-bar" style="width:${p}%;background:${p===100?'linear-gradient(90deg,#10b981,#06b6d4)':'linear-gradient(90deg,#c4b5fd,#818cf8)'}"></div></div></div>`).join('')
+    :'<div style="color:var(--muted);font-size:.88rem">Complete an analysis first.</div>';
+  const doneNames=[...S.completedCourses];
+  document.getElementById('pg-done').innerHTML=doneNames.length
+    ?doneNames.map(n=>{const c=allCourses.find(x=>x.name===n);return`<div class="skill-item"><span style="color:#10b981">✓</span>${n}${c?` <span style="font-size:.77rem;color:var(--muted);margin-left:6px">(${c.platform})</span>`:''}</div>`;}).join('')
+    :'<div style="color:var(--muted);font-size:.88rem">No completed courses yet. Visit Courses and mark them!</div>';
+}
+
+// ── PROFILE ──────────────────────────────────────
+function renderProfile(){
+  if(!S.user)return;
+  const{name,email}=S.user;
+  document.getElementById('pf-av').textContent=name.charAt(0).toUpperCase();
+  ['pf-name','pf-n2'].forEach(id=>document.getElementById(id).textContent=name);
+  ['pf-email','pf-e2'].forEach(id=>document.getElementById(id).textContent=email);
+  document.getElementById('pf-job').textContent=S.dreamJob||'Not set yet';
+  document.getElementById('pf-hrs').textContent=S.dreamJob?`${S.hoursPerWeek} hrs/week`:'—';
+  document.getElementById('pf-stats').innerHTML=`
+    <div class="stat-box"><div class="stat-num">${S.skillsHave.length}</div><div class="stat-lbl">Skills Have</div></div>
+    <div class="stat-box"><div class="stat-num">${S.skillsNeed.length}</div><div class="stat-lbl">To Learn</div></div>
+    <div class="stat-box"><div class="stat-num">${S.completedCourses.size}</div><div class="stat-lbl">Courses Done</div></div>
+    <div class="stat-box"><div class="stat-num">${S.matchScore}%</div><div class="stat-lbl">Match Score</div></div>`;
+  document.getElementById('pf-have').innerHTML=S.skillsHave.length
+    ?'<div class="tag-area">'+S.skillsHave.map(s=>`<div class="tag">✓ ${s}</div>`).join('')+'</div>'
+    :'<div style="color:var(--muted);font-size:.88rem">No skills recorded yet.</div>';
+  document.getElementById('pf-goals').innerHTML=S.skillsNeed.length
+    ?S.skillsNeed.map(s=>`<div class="skill-item"><span style="color:#7c3aed">🎯</span>${s}</div>`).join('')
+    :'<div style="color:var(--muted);font-size:.88rem">Complete an analysis to see goals.</div>';
+}
+
+</script>
+</body>
+</html>
